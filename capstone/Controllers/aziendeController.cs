@@ -56,25 +56,30 @@ namespace capstone.Controllers
         {
             if (ModelState.IsValid)
             {
-                a.verificata = false;
-                a.inattesa = true;
-                a.idcategoria = Convert.ToInt32(a.categoria.categoria);
-                a.categoria = null;
-                model1.aziende.Add(a);
-                model1.SaveChanges();
-                List<aziende> aziende = model1.aziende.ToList();
-                aziende.Reverse();
-                imprenditori i = new imprenditori
+                aziende aziende1 = model1.aziende.FirstOrDefault((e) => e.nomeazienda == a.nomeazienda || e.piva == a.piva);
+                if (aziende1 == null)
                 {
-                    idaziende = aziende[0].idaziende
-                };
-                utenti utenti = model1.utenti.FirstOrDefault((e) => e.username == User.Identity.Name);
-                i.idUtenti = utenti.idUtenti;
-                model1.imprenditori.Add(i);
+                    a.verificata = false;
+                    a.inattesa = true;
+                    a.idcategoria = Convert.ToInt32(a.categoria.categoria);
+                    a.categoria = null;
+                    model1.aziende.Add(a);
+                    model1.SaveChanges();
+                    List<aziende> aziende = model1.aziende.ToList();
+                    aziende.Reverse();
+                    imprenditori i = new imprenditori
+                    {
+                        idaziende = aziende[0].idaziende
+                    };
+                    utenti utenti = model1.utenti.FirstOrDefault((e) => e.username == User.Identity.Name);
+                    i.idUtenti = utenti.idUtenti;
+                    model1.imprenditori.Add(i);
 
-                model1.SaveChanges();
-                return RedirectToAction("aggiungicollaboratore2");
+                    model1.SaveChanges();
+                    return RedirectToAction("aggiungicollaboratore2");
+                }
             }
+            ViewBag.errore = "azienda gia registrata";
             ViewBag.categoria = Listacategoria;
             return View();
         }
@@ -193,6 +198,7 @@ namespace capstone.Controllers
             imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.idaziende == id);
             utenti u = model1.utenti.Find(i.idUtenti);
             u.role = "d-mandager";
+            u.confermapassword = u.password;
             model1.Entry(u).State = EntityState.Modified;
             model1.SaveChanges();
             return RedirectToAction("aggiungicollaboratore2");
