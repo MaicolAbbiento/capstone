@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace capstone.Controllers
 {
+    [Authorize]
     public class aziendeController : Controller
     {
         // GET: aziende
@@ -178,6 +179,7 @@ namespace capstone.Controllers
             return View(a);
         }
 
+        [Authorize(Roles = "amministratore")]
         public ActionResult nonapprovare(int id)
         {
             aziende aziende = model1.aziende.Find(id);
@@ -189,6 +191,7 @@ namespace capstone.Controllers
             return RedirectToAction("aggiungicollaboratore2");
         }
 
+        [Authorize(Roles = "amministratore")]
         public ActionResult approvare(int id)
         {
             aziende aziende = model1.aziende.Find(id);

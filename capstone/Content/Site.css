@@ -4,10 +4,9 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+.imgpr{
+    height :400px;
+    width:400px
+}
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}

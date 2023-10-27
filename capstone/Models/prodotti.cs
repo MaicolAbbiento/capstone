@@ -21,7 +21,7 @@ namespace capstone.Models
 
         public string fotoprodotto { get; set; }
 
-        [StringLength(20)]
+        [StringLength(500)]
         public string nomeprodotto { get; set; }
 
         public string contenutodelprodotto { get; set; }
@@ -32,7 +32,7 @@ namespace capstone.Models
 
         public DateTime? datascadenza { get; set; }
 
-        public string descrizioneshot { get; set; }
+        public string descrizioneshort { get; set; }
 
         public string descrizione { get; set; }
 

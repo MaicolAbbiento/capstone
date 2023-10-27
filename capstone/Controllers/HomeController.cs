@@ -65,7 +65,7 @@ namespace capstone.Controllers
             utenti ut = model1.utenti.FirstOrDefault((e) => e.username == u.username && e.password == u.password);
             if (ut != null)
             {
-                FormsAuthentication.SetAuthCookie(u.username, true);
+                FormsAuthentication.SetAuthCookie(u.username, false);
                 return RedirectToAction("Index");
             }
             ViewBag.utente = "username o password eratti";

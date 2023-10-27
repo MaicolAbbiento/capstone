@@ -165,6 +165,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\aziendeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProdottiController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -176,6 +177,14 @@
     <Compile Include="Migrations\202310251421272_molticorect.cs" />
     <Compile Include="Migrations\202310251421272_molticorect.designer.cs">
       <DependentUpon>202310251421272_molticorect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310261036054_init1.cs" />
+    <Compile Include="Migrations\202310261036054_init1.designer.cs">
+      <DependentUpon>202310261036054_init1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310261202017_nomeprodotti.cs" />
+    <Compile Include="Migrations\202310261202017_nomeprodotti.designer.cs">
+      <DependentUpon>202310261202017_nomeprodotti.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\aziende.cs" />
@@ -260,9 +269,12 @@
     <Content Include="Views\aziende\aggiungicollaboratore2.cshtml" />
     <Content Include="Views\aziende\aggiungicollaboratore1.cshtml" />
     <Content Include="Views\aziende\modificaAzienda.cshtml" />
+    <Content Include="Views\Prodotti\prodotti.cshtml" />
+    <Content Include="Views\Prodotti\buildpagedetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />
@@ -341,6 +353,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310251421272_molticorect.resx">
       <DependentUpon>202310251421272_molticorect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310261036054_init1.resx">
+      <DependentUpon>202310261036054_init1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310261202017_nomeprodotti.resx">
+      <DependentUpon>202310261202017_nomeprodotti.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
