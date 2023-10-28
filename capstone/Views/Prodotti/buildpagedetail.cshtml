@@ -8,7 +8,7 @@
     foreach (string parte in parti)
     {
         string parteTrimmed = parte.Trim();
-        if (parteTrimmed == "br")
+        if (parteTrimmed == "dsi")
         {
             break;
         }
@@ -29,13 +29,16 @@
 
                 @for (var i = 0; i < partiDaVisualizzare.Count; i++)
                 {
-                    if (i % 2 == 0)
+
+                    if (true)
                     {
+
                         <div class="sep">
                             <input id="imp1" placeholder="inserire nome campo" value="@partiDaVisualizzare[i]" />
                             <input id="imp2" placeholder="inserire descrizione" type="text" value="@partiDaVisualizzare[i+1]" />
                         </div>
                     }
+
                 }
 
                 <div class="sep">
@@ -63,7 +66,6 @@
             <div>
             </div>
             <a id="add-car" class="btn"> aggiungi riga di caratteristiche</a>
-            <a href="/confemacampi"> confemacampi </a>
             <div>
                 <div id="imparea">
                     <h4>inserisci descrizioni come per esempio le fuzioni o dettagli delle carateristiche</h4>
@@ -75,6 +77,7 @@
                     </div>
                 </div>
                 <a id="add-car2" class="btn"> aggiungi riga di caratteristiche</a>
+                <button id="btntext"> aggiungi carateristiche</button>
             </div>
         </div>
     </div>
@@ -86,35 +89,38 @@
         $(document).ready(function () {
             // Seleziona l'elemento UL per il suo ID
             var impElement = document.getElementById("imp");
-
+            console.log(impElement, "c")
             // Conta il numero di elementi LI all'interno dell'UL
             var numeroDiElementiLI = impElement.getElementsByTagName("input").length;
             var numeroDiElementiLI2 = numeroDiElementiLI / 2
+
             $("#add-car").click(function () {
                 var div = `<div class="sep">
-                                                      <input id="imp${numeroDiElementiLI + 1}" />
+                                                                                      <input id="imp${numeroDiElementiLI + 1}" />
 <input id="imp${numeroDiElementiLI + 2}" />
 </div>`
                 $("#imp").append(div)
-                numeroDiElementiLI = ulElement.getElementsByTagName("input").length;
-                console.log(numeroDiElementiLI)
+                numeroDiElementiLI = impElement.getElementsByTagName("input").length;
+
                 numeroDiElementiLI2 = numeroDiElementiLI / 2
             })
 
             function getimp() {
                 $(`#btn`).click(function () {
-                    console.log(numeroDiElementiLI2)
+
                     var input
                     for (var i = 0; i < numeroDiElementiLI2; i++) {
                         var n1 = (i + 1) * 2;
                         var n2 = (i + 1) * 2 - 1;
                         var val1 = $(`#imp${n2}`).val();
                         var val2 = $(`#imp${n1}`).val();
-                        if (input != undefined) {
-                            input += " tr " + val1 + " tr " + val2;
-                        }
-                        else {
-                            input = " tr " + val1 + " tr " + val2;
+                        if (val1 != undefined || val2 != undefined) {
+                            if (input != undefined) {
+                                input += " tr " + val1 + " tr " + val2;
+                            }
+                            else {
+                                input = " tr " + val1 + " tr " + val2;
+                            }
                         }
                     }
 
@@ -136,33 +142,37 @@
             var numeroDiElementi = txtElement.getElementsByTagName("textarea").length;
             $("#add-car2").click(function () {
                 var div = `<div class="area">
-                                                    <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
-                                                </div>`
+                                                                                    <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
+                                                                                </div>`
                 $("#imparea").append(div)
                 numeroDiElementi = txtElement.getElementsByTagName("textarea").length
                 gettext()
 
             })
             function gettext() {
-                for (var i = 0; i < numeroDiElementi; i++) {
-                    var val = $(`#textarea${i + 1}`)
-                    var input
-                    if (input != undefined) {
-                        input += " tr " + val
-                    }
-                    else {
-                        input = " tr " + val1
-                    }
-                    $.ajax({
-                        method: 'POST',
-                        url: 'adddestcrizionelg',
-                        data: { imp: input },
-                        sucess: function (data) {
-
+                $(`#btntext`).click(function () {
+                    alert()
+                    for (var i = 0; i < numeroDiElementi; i++) {
+                        var val = $(`#textarea${i + 1}`).val();
+                        var input
+                        if (input != undefined) {
+                            input += " tr " + val
                         }
+                        else {
+                            input = " tr " + val
+                        }
+                        $.ajax({
+                            method: 'POST',
+                            url: 'adddestcrizionelg',
+                            data: { imp: input },
+                            sucess: function (data) {
+
+                            }
+                        })
                     }
-                }
-                gettext()
-            })
+                })
+
+            } gettext()
+        })
     </script>
 }
