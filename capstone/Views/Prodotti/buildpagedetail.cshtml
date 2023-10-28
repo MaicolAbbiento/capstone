@@ -29,37 +29,30 @@
 
                 @for (var i = 0; i < partiDaVisualizzare.Count; i++)
                 {
-
-                    if (true)
+                    if (i % 2 == 0)
                     {
+                        string idf1 = "imp" + (i + 1);
+                        string idf2 = "imp" + (i + 2);
 
                         <div class="sep">
-                            <input id="imp1" placeholder="inserire nome campo" value="@partiDaVisualizzare[i]" />
-                            <input id="imp2" placeholder="inserire descrizione" type="text" value="@partiDaVisualizzare[i+1]" />
+                            <input id=@idf1 placeholder="inserire nome campo" value="@partiDaVisualizzare[i]" />
+                            <input id=@idf2 placeholder="inserire descrizione" type="text" value="@partiDaVisualizzare[i+1]" />
                         </div>
                     }
-
                 }
-
+                @{
+                    string id = "imp" + (partiDaVisualizzare.Count + 1);
+                    string id2 = "imp" + (partiDaVisualizzare.Count + 2);
+                    string id3 = "imp" + (partiDaVisualizzare.Count + 3);
+                    string id4 = "imp" + (partiDaVisualizzare.Count + 4);
+                }
                 <div class="sep">
-                    <input id="imp1" placeholder="inserire nome campo" />
-                    <input id="imp2" placeholder="inserire descrizione" type="text" />
+                    <input id=@id placeholder="inserire nome campo" />
+                    <input id=@id2 placeholder="inserire descrizione" type="text" />
                 </div>
                 <div class="sep">
-                    <input id="imp3" />
-                    <input id="imp4" />
-                </div>
-                <div class="sep">
-                    <input id="imp5" />
-                    <input id="imp6" />
-                </div>
-                <div class="sep">
-                    <input id="imp7" />
-                    <input id="imp8" />
-                </div>
-                <div class="sep">
-                    <input id="imp9" />
-                    <input id="imp10" />
+                    <input id=@id3 />
+                    <input id=@id4 />
                 </div>
             </div>
             <button id="btn"> aggiungi carateristiche</button>
@@ -96,7 +89,7 @@
 
             $("#add-car").click(function () {
                 var div = `<div class="sep">
-                                                                                      <input id="imp${numeroDiElementiLI + 1}" />
+                                                                                                      <input id="imp${numeroDiElementiLI + 1}" />
 <input id="imp${numeroDiElementiLI + 2}" />
 </div>`
                 $("#imp").append(div)
@@ -142,8 +135,8 @@
             var numeroDiElementi = txtElement.getElementsByTagName("textarea").length;
             $("#add-car2").click(function () {
                 var div = `<div class="area">
-                                                                                    <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
-                                                                                </div>`
+                                                                                                    <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
+                                                                                                </div>`
                 $("#imparea").append(div)
                 numeroDiElementi = txtElement.getElementsByTagName("textarea").length
                 gettext()
