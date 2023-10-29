@@ -4,17 +4,40 @@
     string[] parti = Model.descrizione.Split(new string[] { "tr" }, StringSplitOptions.RemoveEmptyEntries);
 
     List<string> partiDaVisualizzare = new List<string>();
+    List<string> partiDaVisualizzare2 = new List<string>();
+    List<string> partiDaVisualizzare3 = new List<string>();
+    int n = 0;
+    int n2 = 0;
 
     foreach (string parte in parti)
     {
         string parteTrimmed = parte.Trim();
         if (parteTrimmed == "dsi")
         {
-            break;
+            n++;
+
         }
-        if (parteTrimmed != "")
+        if (parteTrimmed == "dsf")
         {
-            partiDaVisualizzare.Add(parteTrimmed);
+            n2++;
+        }
+
+        if (parteTrimmed != "" && parteTrimmed != "dsi" && parteTrimmed != "dfm")
+        {
+
+            if (n == 0 && n2 == 0)
+            {
+                partiDaVisualizzare.Add(parteTrimmed);
+            }
+
+            else if (n == 1 && n2 == 0)
+            {
+                partiDaVisualizzare2.Add(parteTrimmed);
+            }
+            else
+            {
+                partiDaVisualizzare3.Add(parteTrimmed);
+            }
         }
 
     }
@@ -89,7 +112,7 @@
 
             $("#add-car").click(function () {
                 var div = `<div class="sep">
-                                                                                                      <input id="imp${numeroDiElementiLI + 1}" />
+                                                                                                                                                          <input id="imp${numeroDiElementiLI + 1}" />
 <input id="imp${numeroDiElementiLI + 2}" />
 </div>`
                 $("#imp").append(div)
@@ -107,13 +130,17 @@
                         var n2 = (i + 1) * 2 - 1;
                         var val1 = $(`#imp${n2}`).val();
                         var val2 = $(`#imp${n1}`).val();
-                        if (val1 != undefined || val2 != undefined) {
-                            if (input != undefined) {
-                                input += " tr " + val1 + " tr " + val2;
+                        if (val1 != undefined && val2 != undefined) {
+                            if (val1 != "" && val2 != "") {
+                                console.log(val1, val2)
+                                if (input != undefined) {
+                                    input += " tr " + val1 + " tr " + val2;
+                                }
+                                else {
+                                    input = " tr " + val1 + " tr " + val2;
+                                }
                             }
-                            else {
-                                input = " tr " + val1 + " tr " + val2;
-                            }
+
                         }
                     }
 
@@ -135,8 +162,8 @@
             var numeroDiElementi = txtElement.getElementsByTagName("textarea").length;
             $("#add-car2").click(function () {
                 var div = `<div class="area">
-                                                                                                    <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
-                                                                                                </div>`
+                                                                                                                                                        <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
+                                                                                                                                                    </div>`
                 $("#imparea").append(div)
                 numeroDiElementi = txtElement.getElementsByTagName("textarea").length
                 gettext()
@@ -144,28 +171,33 @@
             })
             function gettext() {
                 $(`#btntext`).click(function () {
-                    alert()
+                    var input
                     for (var i = 0; i < numeroDiElementi; i++) {
                         var val = $(`#textarea${i + 1}`).val();
-                        var input
+
                         if (input != undefined) {
                             input += " tr " + val
+
                         }
                         else {
                             input = " tr " + val
                         }
-                        $.ajax({
-                            method: 'POST',
-                            url: 'adddestcrizionelg',
-                            data: { imp: input },
-                            sucess: function (data) {
-
-                            }
-                        })
                     }
-                })
+                    console.log(input)
+                    $.ajax({
+                        method: 'POST',
+                        url: 'adddestcrizionelg',
+                        data: { imp: input },
+                        sucess: function (data) {
 
+                        }
+                    })
+                }
+                )
             } gettext()
         })
+
+                 
+  
     </script>
 }

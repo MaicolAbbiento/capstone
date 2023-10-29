@@ -100,89 +100,95 @@ namespace capstone.Controllers
 
         [HttpPost]
         public JsonResult adddestcrizione(string imp)
+
         {
-            prodotti prodotti = new prodotti();
-            if (Session["id"] != null)
+            if (imp != null)
             {
-                int id = (int)Session["id"];
-                prodotti = model1.prodotti.Find(id);
-            }
-            else
-            {
-                imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
-                prodotti = model1.prodotti.FirstOrDefault((e) => e.invendita == false && e.idaziende == i.idaziende);
-            }
-            int n = imp.IndexOf("dsi");
-            if (n >= 0)
-            {
-                string parteDopo = prodotti.descrizione.Substring(n);
-                prodotti.descrizione = imp + parteDopo;
-            }
-            else
-            {
-                int n2 = prodotti.descrizione.IndexOf("dsf");
-                if (n2 >= 0)
+                prodotti prodotti = new prodotti();
+                if (Session["id"] != null)
                 {
-                    string parteDopo = prodotti.descrizione.Substring(n2);
-                    prodotti.descrizione = imp + parteDopo;
+                    int id = (int)Session["id"];
+                    prodotti = model1.prodotti.Find(id);
                 }
                 else
                 {
-                    prodotti.descrizione = imp;
+                    imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
+                    prodotti = model1.prodotti.FirstOrDefault((e) => e.invendita == false && e.idaziende == i.idaziende);
                 }
+                int n = prodotti.descrizione.IndexOf("dsi");
+                if (n >= 0)
+                {
+                    string parteDopo = prodotti.descrizione.Substring(n);
+                    prodotti.descrizione = imp + " " + parteDopo;
+                }
+                else
+                {
+                    int n2 = prodotti.descrizione.IndexOf("dsf");
+                    if (n2 >= 0)
+                    {
+                        string parteDopo = prodotti.descrizione.Substring(n2);
+                        prodotti.descrizione = imp + " " + parteDopo;
+                    }
+                    else
+                    {
+                        prodotti.descrizione = imp;
+                    }
+                }
+
+                model1.Entry(prodotti).State = EntityState.Modified;
+                model1.SaveChanges();
             }
-
-            model1.Entry(prodotti).State = EntityState.Modified;
-            model1.SaveChanges();
-
             return Json(imp);
         }
 
         public JsonResult adddestcrizionelg(string imp)
         {
-            prodotti prodotti = new prodotti();
-            if (Session["id"] != null)
+            if (imp != null)
             {
-                int id = (int)Session["id"];
-                prodotti = model1.prodotti.Find(id);
-            }
-            else
-            {
-                imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
-                prodotti = model1.prodotti.FirstOrDefault((e) => e.invendita == false && e.idaziende == i.idaziende);
-            }
-            int n = prodotti.descrizione.IndexOf("dsi");
-            if (n >= 0)
-            {
-                string partePrima = prodotti.descrizione.Substring(0, n);
-                int n2 = prodotti.descrizione.IndexOf("dsf");
-                string parteDopo = "";
-                if (n2 > 0)
+                prodotti prodotti = new prodotti();
+                if (Session["id"] != null)
                 {
-                    parteDopo = imp.Substring(n2);
+                    int id = (int)Session["id"];
+                    prodotti = model1.prodotti.Find(id);
                 }
-                ;
-                string res = partePrima + imp + parteDopo;
-                prodotti.descrizione = res;
-                model1.Entry(prodotti).State = EntityState.Modified;
-                model1.SaveChanges();
-            }
-            else
-            {
-                imp = " dsi " + imp;
-                string partePrima = prodotti.descrizione;
-                int n2 = prodotti.descrizione.IndexOf("dsf");
-
-                string parteDopo = "";
-                if (n2 > 0)
+                else
                 {
-                    parteDopo = imp.Substring(n2);
+                    imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
+                    prodotti = model1.prodotti.FirstOrDefault((e) => e.invendita == false && e.idaziende == i.idaziende);
                 }
+                int n = prodotti.descrizione.IndexOf("dsi");
+                if (n >= 0)
+                {
+                    string partePrima = prodotti.descrizione.Substring(0, n);
+                    int n2 = prodotti.descrizione.IndexOf("dsf");
+                    string parteDopo = "";
+                    if (n2 > 0)
+                    {
+                        parteDopo = imp.Substring(n2);
+                    }
+                    ;
+                    string res = partePrima + " " + imp + " " + parteDopo;
+                    prodotti.descrizione = res;
+                    model1.Entry(prodotti).State = EntityState.Modified;
+                    model1.SaveChanges();
+                }
+                else
+                {
+                    imp = " tr dsi " + imp;
+                    string partePrima = prodotti.descrizione;
+                    int n2 = prodotti.descrizione.IndexOf("dsf");
 
-                string res = partePrima + imp + parteDopo;
-                prodotti.descrizione = res;
-                model1.Entry(prodotti).State = EntityState.Modified;
-                model1.SaveChanges();
+                    string parteDopo = "";
+                    if (n2 > 0)
+                    {
+                        parteDopo = imp.Substring(n2);
+                    }
+
+                    string res = partePrima + imp + parteDopo;
+                    prodotti.descrizione = res;
+                    model1.Entry(prodotti).State = EntityState.Modified;
+                    model1.SaveChanges();
+                }
             }
             return Json(imp);
         }
