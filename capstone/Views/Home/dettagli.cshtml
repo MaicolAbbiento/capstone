@@ -1,0 +1,119 @@
+﻿@model capstone.Models.prodotti
+
+@{
+
+    string[] parti = Model.descrizione.Split(new string[] { "tr5zx" }, StringSplitOptions.RemoveEmptyEntries);
+
+    List<string> partiDaVisualizzare = new List<string>();
+    List<string> partiDaVisualizzare2 = new List<string>();
+    List<string> partiDaVisualizzare3 = new List<string>();
+    int n = 0;
+    int n2 = 0;
+
+    foreach (string parte in parti)
+    {
+        string parteTrimmed = parte.Trim();
+        if (parteTrimmed == "dsi5zx")
+        {
+            n++;
+
+        }
+        if (parteTrimmed == "dsf5zx")
+        {
+            n2++;
+        }
+
+        if (parteTrimmed != "" && parteTrimmed != "dsi5zx" && parteTrimmed != "dfm5zx")
+        {
+
+            if (n == 0 && n2 == 0)
+            {
+                partiDaVisualizzare.Add(parteTrimmed);
+            }
+
+            else if (n == 1 && n2 == 0)
+            {
+                partiDaVisualizzare2.Add(parteTrimmed);
+            }
+            else
+            {
+                partiDaVisualizzare3.Add(parteTrimmed);
+            }
+        }
+
+    } }
+<div class="d-flex">
+    <img src="~/Content/img/@Model.fotoprodotto" class="imgpr" />
+    <div>
+
+        <div id="imp">
+            <h1> @Model.nomeprodotto</h1>
+            <p>prezzo @Model.prezzo €</p>
+            <h4>carateristche del prodotto </h4>
+
+            @for (var i = 0; i < partiDaVisualizzare.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    string idf1 = "imp" + (i + 1);
+                    string idf2 = "imp" + (i + 2);
+
+                    <div class="sep d-flex">
+                        <p id=@idf1 class="fw-bold me-3"> @partiDaVisualizzare[i] </p>
+                        <p id=@idf2>@partiDaVisualizzare[i + 1]</p>
+                    </div>
+                }
+            }
+        </div>
+        <div>
+        </div>
+
+        <div>
+            <div id="imparea">
+                <h4>Informazioni su questo articolo</h4>
+                <ul>
+                    @for (var i = 0; i < partiDaVisualizzare2.Count; i++)
+                    {
+                        string idf1 = "textarea" + (i + 1);
+
+                        <li id=@idf1> @partiDaVisualizzare2[i] </li>
+
+                    }
+                </ul>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="number" id="number" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" id="btn" value="aggiungi al carello" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            $("#btn").click(function () {
+
+                var valoreInput = $("#number").val();
+                console.log(valoreInput)
+                var url = window.location.href;
+                var id = url.substring(url.lastIndexOf('/') + 1);
+                $.ajax({
+                    method: 'POST',
+                    url: '../dettaglijs',
+                    data: { imp: valoreInput, idn: id },
+                    sucess: function (data) {
+                        $("#number").val("")
+                    }
+                })
+            });
+        });
+    </script>
+}

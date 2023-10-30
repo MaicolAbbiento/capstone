@@ -18,21 +18,21 @@ namespace capstone.Models
 
         [Key]
         public int idprodotti { get; set; }
-
+        [Display(Name = "inserire una foto del prodotto")]
         public string fotoprodotto { get; set; }
 
+        [Required(ErrorMessage = "campo obligatorio")]
         [StringLength(500)]
+        [Display(Name = "inserire il nome del prodotto")]
         public string nomeprodotto { get; set; }
 
-        public string contenutodelprodotto { get; set; }
-
+        [Display(Name = "inserire il prezzo")]
+        [Required(ErrorMessage = "campo obligatorio")]
         public decimal? prezzo { get; set; }
 
+        [Display(Name = "inserire la disponibilità")]
+        [Required(ErrorMessage = "campo obligatorio")]
         public int? prodottiinmagazzino { get; set; }
-
-        public DateTime? datascadenza { get; set; }
-
-        public string descrizioneshort { get; set; }
 
         public string descrizione { get; set; }
 

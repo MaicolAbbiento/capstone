@@ -6,7 +6,13 @@
 }
 .imgpr{
     height :400px;
-    width:400px
+    width:400px;
+    margin-right : 20px
 }
+.area textarea {
+    width: 437px;
+    height: 100px;
+}
+
 
 /* Set width on the form input elements since they're 100% wide by default */

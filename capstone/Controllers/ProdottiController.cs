@@ -115,19 +115,27 @@ namespace capstone.Controllers
                     imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
                     prodotti = model1.prodotti.FirstOrDefault((e) => e.invendita == false && e.idaziende == i.idaziende);
                 }
-                int n = prodotti.descrizione.IndexOf("dsi");
+                int n = -1;
+                if (prodotti.descrizione != null)
+                {
+                    n = prodotti.descrizione.IndexOf(" dsi5zx ");
+                }
                 if (n >= 0)
                 {
                     string parteDopo = prodotti.descrizione.Substring(n);
-                    prodotti.descrizione = imp + " " + parteDopo;
+                    prodotti.descrizione = imp + " tr5zx " + parteDopo;
                 }
                 else
                 {
-                    int n2 = prodotti.descrizione.IndexOf("dsf");
+                    int n2 = -1;
+                    if (prodotti.descrizione != null)
+                    {
+                        n2 = prodotti.descrizione.IndexOf(" dsi5zx ");
+                    }
                     if (n2 >= 0)
                     {
                         string parteDopo = prodotti.descrizione.Substring(n2);
-                        prodotti.descrizione = imp + " " + parteDopo;
+                        prodotti.descrizione = imp + " tr5zx " + parteDopo;
                     }
                     else
                     {
@@ -156,11 +164,19 @@ namespace capstone.Controllers
                     imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
                     prodotti = model1.prodotti.FirstOrDefault((e) => e.invendita == false && e.idaziende == i.idaziende);
                 }
-                int n = prodotti.descrizione.IndexOf("dsi");
+                int n = -1;
+                if (prodotti.descrizione != null)
+                {
+                    n = prodotti.descrizione.IndexOf(" dsi5zx ");
+                }
                 if (n >= 0)
                 {
-                    string partePrima = prodotti.descrizione.Substring(0, n);
-                    int n2 = prodotti.descrizione.IndexOf("dsf");
+                    string partePrima = " tr5zx " + prodotti.descrizione.Substring(0, n + " dsi5zx ".Length);
+                    int n2 = -1;
+                    if (prodotti.descrizione != null)
+                    {
+                        n2 = prodotti.descrizione.IndexOf(" dsi5zx ");
+                    }
                     string parteDopo = "";
                     if (n2 > 0)
                     {
@@ -174,9 +190,13 @@ namespace capstone.Controllers
                 }
                 else
                 {
-                    imp = " tr dsi " + imp;
+                    imp = " tr5zx dsi5zx " + imp;
                     string partePrima = prodotti.descrizione;
-                    int n2 = prodotti.descrizione.IndexOf("dsf");
+                    int n2 = -1;
+                    if (prodotti.descrizione != null)
+                    {
+                        n2 = prodotti.descrizione.IndexOf(" dsi5zx ");
+                    }
 
                     string parteDopo = "";
                     if (n2 > 0)
@@ -191,6 +211,15 @@ namespace capstone.Controllers
                 }
             }
             return Json(imp);
+        }
+
+        public ActionResult concludi(int id)
+        {
+            prodotti prodotti = model1.prodotti.Find(id);
+            prodotti.invendita = true;
+            model1.Entry(prodotti).State = EntityState.Modified;
+            model1.SaveChanges();
+            return RedirectToAction($"dettagli/{id}", "Home");
         }
     }
 }

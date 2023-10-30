@@ -186,6 +186,14 @@
     <Compile Include="Migrations\202310261202017_nomeprodotti.designer.cs">
       <DependentUpon>202310261202017_nomeprodotti.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310301404473_eliminazioneColonne.cs" />
+    <Compile Include="Migrations\202310301404473_eliminazioneColonne.designer.cs">
+      <DependentUpon>202310301404473_eliminazioneColonne.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310301407413_e.cs" />
+    <Compile Include="Migrations\202310301407413_e.designer.cs">
+      <DependentUpon>202310301407413_e.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\aziende.cs" />
     <Compile Include="Models\carello.cs" />
@@ -271,6 +279,7 @@
     <Content Include="Views\aziende\modificaAzienda.cshtml" />
     <Content Include="Views\Prodotti\prodotti.cshtml" />
     <Content Include="Views\Prodotti\buildpagedetail.cshtml" />
+    <Content Include="Views\Home\dettagli.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -359,6 +368,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310261202017_nomeprodotti.resx">
       <DependentUpon>202310261202017_nomeprodotti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310301404473_eliminazioneColonne.resx">
+      <DependentUpon>202310301404473_eliminazioneColonne.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310301407413_e.resx">
+      <DependentUpon>202310301407413_e.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

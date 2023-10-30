@@ -44,14 +44,11 @@ namespace capstone.Models
         public string CAP { get; set; }
 
         [Required(ErrorMessage = "Campo obbligatorio")]
-        public string RagioneSociale { get; set; }
-
-        [Required(ErrorMessage = "Campo obbligatorio")]
         [StringLength(20)]
         public string telfonoaziendale { get; set; }
 
         public bool inattesa { get; set; }
-        public DateTime? dataAprovazione { get; set; } 
+        public DateTime? dataAprovazione { get; set; }
         public bool verificata { get; set; }
         public int idcategoria { get; set; }
         public virtual Categoria categoria { get; set; }

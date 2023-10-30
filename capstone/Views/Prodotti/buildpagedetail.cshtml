@@ -1,8 +1,11 @@
 ﻿@model capstone.Models.prodotti
 @{
 
-    string[] parti = Model.descrizione.Split(new string[] { "tr" }, StringSplitOptions.RemoveEmptyEntries);
-
+    string[] parti = new string[] { };
+    if (Model.descrizione != null)
+    {
+        parti = Model.descrizione.Split(new string[] { "tr5zx" }, StringSplitOptions.RemoveEmptyEntries);
+    }
     List<string> partiDaVisualizzare = new List<string>();
     List<string> partiDaVisualizzare2 = new List<string>();
     List<string> partiDaVisualizzare3 = new List<string>();
@@ -12,17 +15,17 @@
     foreach (string parte in parti)
     {
         string parteTrimmed = parte.Trim();
-        if (parteTrimmed == "dsi")
+        if (parteTrimmed == "dsi5zx")
         {
             n++;
 
         }
-        if (parteTrimmed == "dsf")
+        if (parteTrimmed == "dsf5zx")
         {
             n2++;
         }
 
-        if (parteTrimmed != "" && parteTrimmed != "dsi" && parteTrimmed != "dfm")
+        if (parteTrimmed != "" && parteTrimmed != "dsi5zx" && parteTrimmed != "dfm5zx")
         {
 
             if (n == 0 && n2 == 0)
@@ -41,6 +44,7 @@
         }
 
     }
+
     <div class="d-flex">
         <img src="~/Content/img/@Model.fotoprodotto" class="imgpr" />
         <div>
@@ -85,11 +89,23 @@
             <div>
                 <div id="imparea">
                     <h4>inserisci descrizioni come per esempio le fuzioni o dettagli delle carateristiche</h4>
+                    @for (var i = 0; i < partiDaVisualizzare2.Count; i++)
+                    {
+                        string idf1 = "textarea" + (i + 1);
+                        <div class="area">
+                            <textarea id=@idf1> @partiDaVisualizzare2[i] </textarea>
+                        </div>
+                    }
+                    @{
+                        string idtxt1 = "textarea" + (partiDaVisualizzare.Count + 1);
+                        string idtxt2 = "textarea" + (partiDaVisualizzare.Count + 2);
+                    }
+
                     <div class="area">
-                        <textarea id="textarea1"> </textarea>
+                        <textarea id=@idtxt1> </textarea>
                     </div>
                     <div class="area">
-                        <textarea id="textarea2"> </textarea>
+                        <textarea id=@idtxt2> </textarea>
                     </div>
                 </div>
                 <a id="add-car2" class="btn"> aggiungi riga di caratteristiche</a>
@@ -97,6 +113,8 @@
             </div>
         </div>
     </div>
+    string link = "concludi/" + @Model.idprodotti;
+    <a href=@link> conferma e metti in vendita il prodotto </a>
 
 }
 
@@ -112,7 +130,7 @@
 
             $("#add-car").click(function () {
                 var div = `<div class="sep">
-                                                                                                                                                          <input id="imp${numeroDiElementiLI + 1}" />
+                                                                                                                                                                                          <input id="imp${numeroDiElementiLI + 1}" />
 <input id="imp${numeroDiElementiLI + 2}" />
 </div>`
                 $("#imp").append(div)
@@ -132,12 +150,12 @@
                         var val2 = $(`#imp${n1}`).val();
                         if (val1 != undefined && val2 != undefined) {
                             if (val1 != "" && val2 != "") {
-                                console.log(val1, val2)
+
                                 if (input != undefined) {
-                                    input += " tr " + val1 + " tr " + val2;
+                                    input += " tr5zx " + val1 + " tr5zx " + val2;
                                 }
                                 else {
-                                    input = " tr " + val1 + " tr " + val2;
+                                    input = " tr5zx " + val1 + " tr5zx " + val2;
                                 }
                             }
 
@@ -162,8 +180,8 @@
             var numeroDiElementi = txtElement.getElementsByTagName("textarea").length;
             $("#add-car2").click(function () {
                 var div = `<div class="area">
-                                                                                                                                                        <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
-                                                                                                                                                    </div>`
+                                                                                                                                                                                        <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
+                                                                                                                                                                                    </div>`
                 $("#imparea").append(div)
                 numeroDiElementi = txtElement.getElementsByTagName("textarea").length
                 gettext()
@@ -174,30 +192,28 @@
                     var input
                     for (var i = 0; i < numeroDiElementi; i++) {
                         var val = $(`#textarea${i + 1}`).val();
+                        if (val != undefined && val != "") {
+                            if (input != undefined) {
+                                input += " tr5zx " + val
+                            }
+                            else {
+                                input = " tr5zx " + val
 
-                        if (input != undefined) {
-                            input += " tr " + val
-
-                        }
-                        else {
-                            input = " tr " + val
+                            }
                         }
                     }
-                    console.log(input)
+                    alert()
                     $.ajax({
                         method: 'POST',
                         url: 'adddestcrizionelg',
                         data: { imp: input },
                         sucess: function (data) {
-
+                            console.log(data)
                         }
                     })
                 }
                 )
             } gettext()
         })
-
-                 
-  
     </script>
 }
