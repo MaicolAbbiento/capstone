@@ -12,6 +12,8 @@ namespace capstone.Models
         [Key]
         public int idrecensioni { get; set; }
 
+        [Required(ErrorMessage = "Campo obbligatorio")]
+        [Display(Name = "valutazione (1-5)")]
         public decimal? valutazione { get; set; }
 
         public string descrizione { get; set; }
@@ -21,6 +23,7 @@ namespace capstone.Models
         public int? idprodotti { get; set; }
 
         public int? utilita { get; set; }
+        public string titolo { get; set; }
 
         public virtual prodotti prodotti { get; set; }
 

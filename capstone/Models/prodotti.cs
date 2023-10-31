@@ -18,6 +18,7 @@ namespace capstone.Models
 
         [Key]
         public int idprodotti { get; set; }
+
         [Display(Name = "inserire una foto del prodotto")]
         public string fotoprodotto { get; set; }
 

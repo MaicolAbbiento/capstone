@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace capstone.Controllers
 {
-    [Authorize(Roles = "d-mandager,mandager")]
+    [Authorize(Roles = "d-manager,manager")]
     public class ProdottiController : Controller
     {
         private Model1 model1 = new Model1();
@@ -92,7 +92,12 @@ namespace capstone.Controllers
             }
             else
             {
-                prodotti prodotti = model1.prodotti.Find(id);
+                imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
+                prodotti prodotti = model1.prodotti.FirstOrDefault((e) => e.idaziende == i.idaziende);
+                if (prodotti == null)
+                {
+                    return RedirectToAction("home", "index");
+                }
                 Session["id"] = id;
                 return View(prodotti);
             }
@@ -108,6 +113,7 @@ namespace capstone.Controllers
                 if (Session["id"] != null)
                 {
                     int id = (int)Session["id"];
+                    imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
                     prodotti = model1.prodotti.Find(id);
                 }
                 else

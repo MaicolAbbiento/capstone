@@ -1,4 +1,5 @@
-﻿using capstone.Models;
+﻿using capstone.Migrations;
+using capstone.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -83,15 +84,33 @@ namespace capstone.Controllers
         [HttpGet]
         public ActionResult dettagli(int? id)
         {
-            if (id == 32094)
-            {
-                return RedirectToAction("Index");
-            }
             prodotti p = model1.prodotti.Find(id);
             if (p == null)
             {
                 return RedirectToAction("Index");
             }
+            List<carello> c = model1.carello.Where((e) => e.idprodotti == id).ToList();
+            List<vendita> v = new List<vendita>();
+            foreach (var item in c)
+            {
+                if (item.vendita.utenti.username == User.Identity.Name)
+                {
+                    v.Add(item.vendita);
+                }
+            }
+            p.vendita = v;
+            if (p.recensioni.Count > 0)
+            {
+                foreach (var item in p.recensioni)
+                {
+                    if (item.utenti.username == User.Identity.Name)
+                    {
+                        ViewBag.recesione = 1;
+                    };
+                }
+            }
+            p.recensioni = model1.recensioni.Where((e) => e.idprodotti == id).ToList();
+            p.recensioni.Reverse();
             return View(p);
         }
 
@@ -158,6 +177,63 @@ namespace capstone.Controllers
             }
             string success = "ok";
             return Json(success);
+        }
+
+        [HttpPost]
+        public JsonResult comment(string textarea, int valutazione, int id)
+        {
+            recensioni recensioni = new recensioni();
+            if (valutazione > 0)
+            {
+                utenti U = model1.utenti.FirstOrDefault((e) => e.username == User.Identity.Name);
+                if (U != null)
+                {
+                    recensioni r = model1.recensioni.FirstOrDefault((e) => e.idprodotti == id && e.idUtenti == U.idUtenti);
+                    recensioni.idUtenti = U.idUtenti;
+                    recensioni.idprodotti = id;
+                    recensioni.valutazione = valutazione;
+                    recensioni.descrizione = textarea;
+                    model1.recensioni.Add(recensioni);
+                    model1.SaveChanges();
+                }
+            }
+            else
+            {
+                valutazione = 0;
+                return Json(valutazione);
+            }
+            return Json(recensioni);
+        }
+
+        [HttpGet]
+        public ActionResult modificarecensione(int id)
+        {
+            recensioni r = model1.recensioni.FirstOrDefault((e) => e.idrecensioni == id && e.utenti.username == User.Identity.Name);
+            if (r != null)
+            {
+                return View(r);
+            }
+            else
+            {
+                string link = "dettagli/" + id;
+                return RedirectToAction(link);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult modificarecensione(recensioni recensioni)
+        {
+            if (ModelState.IsValid)
+            {
+                if (recensioni.valutazione <= 5 && recensioni.valutazione >= 1)
+                {
+                    model1.Entry(recensioni).State = EntityState.Modified;
+                    model1.SaveChanges();
+                    ViewBag.modifica = "modifica avvenuta con sucesso";
+                }
+            }
+            return View();
         }
     }
 }

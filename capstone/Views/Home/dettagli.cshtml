@@ -42,13 +42,22 @@
         }
 
     } }
-<div class="d-flex">
+<div class="d-flex" id="div">
     <img src="~/Content/img/@Model.fotoprodotto" class="imgpr" />
     <div>
 
         <div id="imp">
             <h1> @Model.nomeprodotto</h1>
             <p>prezzo @Model.prezzo €</p>
+            @if (@Model.valutazione != null && @Model.valutazione != 0)
+            {
+                for (var i = 0; i <= @Model.valutazione; i++)
+                {
+                    <i class="fa-solid fa-star" style="color: #fea21c;"></i>
+
+                }
+                <p>@Model.recensioni recensioni </p>
+            }
             <h4>carateristche del prodotto </h4>
 
             @for (var i = 0; i < partiDaVisualizzare.Count; i++)
@@ -95,6 +104,61 @@
         </div>
     </div>
 </div>
+<h4>recensioni</h4>
+@if (Model.vendita.Count > 0)
+
+{
+    if (ViewBag.recesione == null)
+    {
+        <div id="container">
+            <i class="fa-regular fa-star comment" id="star1"></i>
+            <i class="fa-regular fa-star comment" id="star2"></i>
+            <i class="fa-regular fa-star comment" id="star3"></i>
+            <i class="fa-regular fa-star comment" id="star4"></i>
+            <i class="fa-regular fa-star comment" id="star5"></i>
+        </div>
+<textarea id="textarea"> </textarea>
+        <button id="btn2"> lascia recensione </button>
+    }
+}
+
+<btn class="btn" id="btn2"> </btn>
+@if (Model.recensioni.Count > 0)
+{
+
+    foreach (capstone.Models.recensioni r in Model.recensioni)
+    {
+        string rec = "../modificarecensione/" + r.idrecensioni;
+        <div>
+            @if (r.utenti.username == User.Identity.Name)
+
+            {
+                <a class="btn d-block w-25 text-start p-0"  href=@rec> modifica questo commento </a>}
+else
+                    {
+        <p>commento di @r.utenti.username  </p>
+                    }
+
+                @for (var i = 0; i < r.valutazione; i++)
+                {
+
+                    <i class="fa-solid fa-star" style="color: #fea21c;"></i>
+
+                }
+                @{
+                    int n1 = 5 - (int)r.valutazione;
+                }
+                @for (var i = 0; i < n1; i++)
+                {
+
+                    <i class="fa-regular fa-star" style="color: #fea21c;"></i>
+                }
+            <p class="d-inline ms-2 fw-bold"> @r.titolo </p>
+                <p> @r.descrizione  </p>
+            </div>
+    }
+}
+
 @section scripts {
     <script>
         $(document).ready(function () {
@@ -110,10 +174,73 @@
                     url: '../dettaglijs',
                     data: { imp: valoreInput, idn: id },
                     sucess: function (data) {
+                        let val = ""
+                        if (data != "ok") {
+                            val = `<p>${data} </p>`
+                        }
+                        else {
+                            val = `<p> prodotto aggiunto corretamente al carrello </p>`
+                        }
                         $("#number").val("")
+                        $("#div").append(val)
                     }
                 })
             });
         });
+        $(".comment").hover(function () {
+            $(".comment").removeClass("fa-solid");
+            $(".comment").addClass("fa-regular")
+
+            selectedStars = $(this).index() + 1;
+            for (var i = 0; i < selectedStars; i++) {
+                $(".comment").eq(i).addClass("fa-solid");
+                $(".comment").eq(i).removeClass("fa-regular")
+            }
+        });
+
+        // Aggiungi l'evento al clic
+        $(".comment").click(function () {
+            $(".comment").removeClass("fa-solid");
+            $(".comment").addClass("fa-regular")
+            selectedStars = $(this).index() + 1;
+            for (var i = 0; i < selectedStars; i++) {
+                $(".comment").eq(i).addClass("fa-solid");
+                $(".comment").eq(i).removeClass("fa-regular")
+            }
+        })
+        $("#btn2").click(function () {
+
+            let input = $("#textarea").val()
+            let div = document.getElementById("container")
+            console.log(div)
+            var url = window.location.href;
+            let n = div.getElementsByClassName("fa-solid").length;
+            console.log(n)
+            console.log(div.getElementsByClassName("fa-solid"))
+            var id1 = url.substring(url.lastIndexOf('/') + 1);
+            $.ajax({
+                method: 'POST',
+                url: '../comment',
+                data: { textarea: input, valutazione: n, id: id1 },
+                sucess: function (data) {
+                    if (data = !0) {
+                        var err = `<p> inserire una valutazione </p>`
+                        err.append("#container")
+
+                    }
+
+                }
+            })
+
+            if (n > 0) {
+                var posizioneCorrente = window.scrollY;
+
+                location.reload();
+
+                window.scrollTo(0, posizioneCorrente);
+            }
+        });
+
+        ;
     </script>
 }

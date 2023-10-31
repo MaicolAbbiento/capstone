@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -88,7 +89,7 @@ namespace capstone.Controllers
         [HttpGet]
         public ActionResult modificaAzienda(int id)
         {
-            if (!User.IsInRole("amministratore"))
+            if (!User.IsInRole("d-manager,manager"))
             {
                 utenti utenti = model1.utenti.FirstOrDefault((e) => e.username == User.Identity.Name);
                 if (utenti != null)
@@ -96,7 +97,7 @@ namespace capstone.Controllers
                     imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
                     if (i != null)
                     {
-                        aziende a = model1.aziende.FirstOrDefault((e) => e.idaziende == id && e.idaziende == i.idaziende);
+                        aziende a = model1.aziende.FirstOrDefault((e) => e.idaziende == i.idaziende);
                         if (a != null)
                         {
                             ViewBag.categoria = Listacategoria;
@@ -200,7 +201,7 @@ namespace capstone.Controllers
             model1.Entry(aziende).State = EntityState.Modified;
             imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.idaziende == id);
             utenti u = model1.utenti.Find(i.idUtenti);
-            u.role = "d-mandager";
+            u.role = "d-manager";
             u.confermapassword = u.password;
             model1.Entry(u).State = EntityState.Modified;
             model1.SaveChanges();

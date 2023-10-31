@@ -13,6 +13,13 @@
     width: 437px;
     height: 100px;
 }
+.comment {
+    color: #fea21c; 
+    cursor: pointer; 
+}
+
+.fa-solid {
+    color: #fea21c; 
+}
 
 
-/* Set width on the form input elements since they're 100% wide by default */

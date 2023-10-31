@@ -21,17 +21,19 @@ namespace capstone.Models
         [Key]
         public int idaziende { get; set; }
 
+        [Display(Name = "Ragione sociale")]
         [Required(ErrorMessage = "Campo obbligatorio")]
         [StringLength(60)]
         public string nomeazienda { get; set; }
 
+        [Display(Name = "Partita IVA")]
         [Required(ErrorMessage = "Campo obbligatorio")]
         [StringLength(11)]
         public string piva { get; set; }
 
         [Required(ErrorMessage = "Campo obbligatorio")]
         [StringLength(100)]
-        public string paese { get; set; }
+        public string Paese { get; set; }
 
         [Required(ErrorMessage = "Campo obbligatorio")]
         public string citta { get; set; }
@@ -45,6 +47,7 @@ namespace capstone.Models
 
         [Required(ErrorMessage = "Campo obbligatorio")]
         [StringLength(20)]
+        [Display(Name = "telfono aziendale")]
         public string telfonoaziendale { get; set; }
 
         public bool inattesa { get; set; }
