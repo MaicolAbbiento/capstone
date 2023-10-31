@@ -56,6 +56,7 @@ namespace capstone.Controllers
                     if (fotoprodotto != null && fotoprodotto.ContentLength > 0)
                     {
                         p.invendita = false;
+                        p.valutazione = null;
                         p.idaziende = i.idaziende;
                         p.fotoprodotto = fotoprodotto.FileName;
                         string pathToSave = Path.Combine(Server.MapPath("~/Content/img"), p.fotoprodotto);

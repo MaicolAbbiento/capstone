@@ -21,11 +21,6 @@ namespace capstone.Models
         public virtual DbSet<vendita> vendita { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<recensioni>()
-                .Property(e => e.valutazione)
-                .HasPrecision(3, 1);
-        }
+      
     }
 }

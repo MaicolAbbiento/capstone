@@ -14,7 +14,7 @@ namespace capstone.Models
 
         [Required(ErrorMessage = "Campo obbligatorio")]
         [Display(Name = "valutazione (1-5)")]
-        public decimal? valutazione { get; set; }
+        public int? valutazione { get; set; }
 
         public string descrizione { get; set; }
 

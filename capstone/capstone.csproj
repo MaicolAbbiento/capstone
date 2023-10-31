@@ -198,6 +198,10 @@
     <Compile Include="Migrations\202310311134285_nuovo-campo-titolo-calsse-recensioni.designer.cs">
       <DependentUpon>202310311134285_nuovo-campo-titolo-calsse-recensioni.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310311400259_init2.cs" />
+    <Compile Include="Migrations\202310311400259_init2.designer.cs">
+      <DependentUpon>202310311400259_init2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\aziende.cs" />
     <Compile Include="Models\carello.cs" />
@@ -382,6 +386,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310311134285_nuovo-campo-titolo-calsse-recensioni.resx">
       <DependentUpon>202310311134285_nuovo-campo-titolo-calsse-recensioni.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310311400259_init2.resx">
+      <DependentUpon>202310311400259_init2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -99,6 +99,8 @@ namespace capstone.Controllers
                 }
             }
             p.vendita = v;
+            p.recensioni = model1.recensioni.Where((e) => e.idprodotti == id).ToList();
+            p.recensioni.Reverse();
             if (p.recensioni.Count > 0)
             {
                 foreach (var item in p.recensioni)
@@ -109,8 +111,7 @@ namespace capstone.Controllers
                     };
                 }
             }
-            p.recensioni = model1.recensioni.Where((e) => e.idprodotti == id).ToList();
-            p.recensioni.Reverse();
+
             return View(p);
         }
 
@@ -209,6 +210,7 @@ namespace capstone.Controllers
         public ActionResult modificarecensione(int id)
         {
             recensioni r = model1.recensioni.FirstOrDefault((e) => e.idrecensioni == id && e.utenti.username == User.Identity.Name);
+            Session["id"] = id;
             if (r != null)
             {
                 return View(r);
@@ -224,15 +226,22 @@ namespace capstone.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult modificarecensione(recensioni recensioni)
         {
-            if (ModelState.IsValid)
+            if (recensioni.valutazione == 5 || recensioni.valutazione == 1 || recensioni.valutazione == 2 || recensioni.valutazione == 3 || recensioni.valutazione == 4)
             {
-                if (recensioni.valutazione <= 5 && recensioni.valutazione >= 1)
-                {
-                    model1.Entry(recensioni).State = EntityState.Modified;
-                    model1.SaveChanges();
-                    ViewBag.modifica = "modifica avvenuta con sucesso";
-                }
+                int id = (int)Session["id"];
+                recensioni r = model1.recensioni.FirstOrDefault((e) => e.idrecensioni == id && e.utenti.username == User.Identity.Name);
+                recensioni.idprodotti = id;
+                recensioni.idUtenti = r.idUtenti;
+                Model1 db = new Model1();
+                db.Entry(recensioni).State = EntityState.Modified;
+                db.SaveChanges();
+                ViewBag.modifica = "modifica avvenuta con sucesso";
             }
+            else
+            {
+                ViewBag.errore = "inserire una valutazione da 1 a 5 ";
+            }
+
             return View();
         }
     }
