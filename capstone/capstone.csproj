@@ -164,6 +164,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\aziendeController.cs" />
+    <Compile Include="Controllers\gestionevenditeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProdottiController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -289,10 +290,12 @@
     <Content Include="Views\Prodotti\buildpagedetail.cshtml" />
     <Content Include="Views\Home\dettagli.cshtml" />
     <Content Include="Views\Home\modificarecensione.cshtml" />
+    <Content Include="Views\Prodotti\modifica.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\img\" />
+    <Folder Include="Views\gestionevendite\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />

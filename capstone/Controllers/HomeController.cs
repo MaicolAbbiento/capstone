@@ -101,6 +101,7 @@ namespace capstone.Controllers
             p.vendita = v;
             p.recensioni = model1.recensioni.Where((e) => e.idprodotti == id).ToList();
             p.recensioni.Reverse();
+            p.valutazione = 0;
             if (p.recensioni.Count > 0)
             {
                 foreach (var item in p.recensioni)
@@ -109,6 +110,20 @@ namespace capstone.Controllers
                     {
                         ViewBag.recesione = 1;
                     };
+                    p.valutazione += item.valutazione;
+                }
+                p.valutazione /= p.recensioni.Count();
+            }
+            model1.Entry(p).State = EntityState.Modified;
+            model1.SaveChanges();
+            aziende A = model1.aziende.Find(p.idaziende);
+            imprenditori i = new imprenditori();
+            foreach (imprenditori aziende in A.imprenditori)
+            {
+                i = model1.imprenditori.FirstOrDefault((e) => e.idimpreditori == aziende.idimpreditori && e.utenti.username == User.Identity.Name);
+                if (i != null)
+                {
+                    ViewBag.modifica = true;
                 }
             }
 
@@ -121,7 +136,15 @@ namespace capstone.Controllers
             prodotti p = model1.prodotti.Find(idn);
             if (p.prodottiinmagazzino < imp)
             {
-                string err = "prodotti insufficanti solo " + p.prodottiinmagazzino + " presenti";
+                string err = "";
+                if (p.prodottiinmagazzino == 0)
+                {
+                    err = "prodotti insufficenti solo " + p.prodottiinmagazzino + " prodotto presente";
+                }
+                else
+                {
+                    err = "prodotti insufficenti solo " + p.prodottiinmagazzino + " prodotti presenti";
+                }
                 return Json(err);
             }
             else
@@ -181,7 +204,7 @@ namespace capstone.Controllers
         }
 
         [HttpPost]
-        public JsonResult comment(string textarea, int valutazione, int id)
+        public JsonResult comment(string textarea, int valutazione, int id, string titolod)
         {
             recensioni recensioni = new recensioni();
             if (valutazione > 0)
@@ -190,12 +213,17 @@ namespace capstone.Controllers
                 if (U != null)
                 {
                     recensioni r = model1.recensioni.FirstOrDefault((e) => e.idprodotti == id && e.idUtenti == U.idUtenti);
-                    recensioni.idUtenti = U.idUtenti;
-                    recensioni.idprodotti = id;
-                    recensioni.valutazione = valutazione;
-                    recensioni.descrizione = textarea;
-                    model1.recensioni.Add(recensioni);
-                    model1.SaveChanges();
+                    if (r == null)
+                    {
+                        recensioni.idUtenti = U.idUtenti;
+                        recensioni.titolo = titolod;
+                        recensioni.idprodotti = id;
+                        recensioni.valutazione = valutazione;
+                        recensioni.descrizione = textarea;
+                        Model1 db = new Model1();
+                        db.recensioni.Add(recensioni);
+                        db.SaveChanges();
+                    }
                 }
             }
             else
@@ -230,12 +258,16 @@ namespace capstone.Controllers
             {
                 int id = (int)Session["id"];
                 recensioni r = model1.recensioni.FirstOrDefault((e) => e.idrecensioni == id && e.utenti.username == User.Identity.Name);
-                recensioni.idprodotti = id;
-                recensioni.idUtenti = r.idUtenti;
-                Model1 db = new Model1();
-                db.Entry(recensioni).State = EntityState.Modified;
-                db.SaveChanges();
-                ViewBag.modifica = "modifica avvenuta con sucesso";
+                if (r != null)
+                {
+                    recensioni.idrecensioni = id;
+                    recensioni.idprodotti = r.idprodotti;
+                    recensioni.idUtenti = r.idUtenti;
+                    Model1 db = new Model1();
+                    db.Entry(recensioni).State = EntityState.Modified;
+                    db.SaveChanges();
+                    ViewBag.modifica = "modifica avvenuta con sucesso";
+                }
             }
             else
             {

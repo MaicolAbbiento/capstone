@@ -51,12 +51,21 @@
             <p>prezzo @Model.prezzo €</p>
             @if (@Model.valutazione != null && @Model.valutazione != 0)
             {
-                for (var i = 0; i <= @Model.valutazione; i++)
+                for (var i = 0; i < Model.valutazione; i++)
                 {
+
                     <i class="fa-solid fa-star" style="color: #fea21c;"></i>
 
                 }
-                <p>@Model.recensioni recensioni </p>
+
+                int n4 = 5 - (int)Model.valutazione;
+
+                for (var i = 0; i < n4; i++)
+                {
+
+                    <i class="fa-regular fa-star" style="color: #fea21c;"></i>
+                }
+
             }
             <h4>carateristche del prodotto </h4>
 
@@ -95,6 +104,12 @@
                         <input type="number" id="number" />
                     </div>
                 </div>
+                @if (ViewBag.modifica != null)
+                {
+                    string i = "../../prodotti/buildpagedetail/" + Model.idprodotti;
+                    <a class="btn"
+                       href=@i> cambia i dettagli del prodottto </a>
+                }
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="button" id="btn" value="aggiungi al carello" class="btn btn-default" />
@@ -102,6 +117,7 @@
                 </div>
             </div>
         </div>
+        <div id="err"></div>
     </div>
 </div>
 <h4>recensioni</h4>
@@ -110,15 +126,18 @@
 {
     if (ViewBag.recesione == null)
     {
-        <div id="container">
-            <i class="fa-regular fa-star comment" id="star1"></i>
-            <i class="fa-regular fa-star comment" id="star2"></i>
-            <i class="fa-regular fa-star comment" id="star3"></i>
-            <i class="fa-regular fa-star comment" id="star4"></i>
-            <i class="fa-regular fa-star comment" id="star5"></i>
+        <div>
+            <div id="container">
+                <i class="fa-regular fa-star comment" id="star1"></i>
+                <i class="fa-regular fa-star comment" id="star2"></i>
+                <i class="fa-regular fa-star comment" id="star3"></i>
+                <i class="fa-regular fa-star comment" id="star4"></i>
+                <i class="fa-regular fa-star comment" id="star5"></i>
+            </div>
+            <input placeholder="inserici un titolo" id="input" />
+<textarea class="d-block" id="textarea"> </textarea>
+            <button id="btn2"> lascia recensione </button>
         </div>
-<textarea id="textarea"> </textarea>
-        <button id="btn2"> lascia recensione </button>
     }
 }
 
@@ -133,29 +152,29 @@
             @if (r.utenti.username == User.Identity.Name)
 
             {
-                <a class="btn d-block w-25 text-start p-0"  href=@rec> modifica questo commento </a>}
-else
-                    {
-        <p>commento di @r.utenti.username  </p>
-                    }
+                <a class="btn d-block w-25 text-start p-0" href=@rec> modifica questo commento </a>}
+            else
+            {
+                <p>commento di @r.utenti.username  </p>
+            }
 
-                @for (var i = 0; i < r.valutazione; i++)
-                {
+            @for (var i = 0; i < r.valutazione; i++)
+            {
 
-                    <i class="fa-solid fa-star" style="color: #fea21c;"></i>
+                <i class="fa-solid fa-star" style="color: #fea21c;"></i>
 
-                }
-                @{
-                    int n1 = 5 - (int)r.valutazione;
-                }
-                @for (var i = 0; i < n1; i++)
-                {
+            }
+            @{
+                int n1 = 5 - (int)r.valutazione;
+            }
+            @for (var i = 0; i < n1; i++)
+            {
 
-                    <i class="fa-regular fa-star" style="color: #fea21c;"></i>
-                }
+                <i class="fa-regular fa-star" style="color: #fea21c;"></i>
+            }
             <p class="d-inline ms-2 fw-bold"> @r.titolo </p>
-                <p> @r.descrizione  </p>
-            </div>
+            <p> @r.descrizione  </p>
+        </div>
     }
 }
 
@@ -173,17 +192,19 @@ else
                     method: 'POST',
                     url: '../dettaglijs',
                     data: { imp: valoreInput, idn: id },
-                    sucess: function (data) {
+                    success: function (data) {
+                        $("#err").empty()
                         let val = ""
                         if (data != "ok") {
-                            val = `<p>${data} </p>`
+                            val = `<p class="text-danger">${data} </p>`
                         }
                         else {
                             val = `<p> prodotto aggiunto corretamente al carrello </p>`
                         }
                         $("#number").val("")
-                        $("#div").append(val)
-                    }
+                        $("#err").append(val)
+                    },
+
                 })
             });
         });
@@ -212,33 +233,33 @@ else
 
             let input = $("#textarea").val()
             let div = document.getElementById("container")
-            console.log(div)
+            let titolo = $("#input").val()
             var url = window.location.href;
             let n = div.getElementsByClassName("fa-solid").length;
             console.log(n)
             console.log(div.getElementsByClassName("fa-solid"))
             var id1 = url.substring(url.lastIndexOf('/') + 1);
+            var posizioneCorrente = window.scrollY;
             $.ajax({
                 method: 'POST',
                 url: '../comment',
-                data: { textarea: input, valutazione: n, id: id1 },
-                sucess: function (data) {
+                data: { textarea: input, valutazione: n, id: id1, titolod: titolo },
+                success: function (data) {
                     if (data = !0) {
                         var err = `<p> inserire una valutazione </p>`
-                        err.append("#container")
+                            $("#container").append(err)
+                        if (n > 0) {
+
+                            location.reload();
+
+                            window.scrollTo(0, posizioneCorrente);
+                        }
 
                     }
 
                 }
             })
 
-            if (n > 0) {
-                var posizioneCorrente = window.scrollY;
-
-                location.reload();
-
-                window.scrollTo(0, posizioneCorrente);
-            }
         });
 
         ;
