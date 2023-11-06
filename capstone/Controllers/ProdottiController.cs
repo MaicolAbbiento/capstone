@@ -245,6 +245,7 @@ namespace capstone.Controllers
         public ActionResult modifica(int id)
         {
             ViewBag.categoria = Listacategoria;
+
             imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
             prodotti prodotti = model1.prodotti.FirstOrDefault((e) => e.idaziende == i.idaziende && e.idprodotti == id);
             if (i != null)
@@ -272,7 +273,21 @@ namespace capstone.Controllers
                 fotoprodotto.SaveAs(pathToSave);
                 model1.Entry(p).State = EntityState.Modified;
                 model1.SaveChanges();
-                ViewBag.Success = "prodotto modificato con sucesso";
+            }
+            else
+            {
+                p.invendita = prodotti.invendita;
+                p.valutazione = null;
+                p.idaziende = i.idaziende;
+                p.descrizione = prodotti.descrizione;
+                p.idcategoria = Convert.ToInt32(p.categoria.categoria);
+                p.categoria = null;
+                p.idaziende = prodotti.idaziende;
+
+                p.fotoprodotto = prodotti.fotoprodotto;
+                Model1 model = new Model1();
+                model.Entry(p).State = EntityState.Modified;
+                model.SaveChanges();
             }
             return View();
         }
