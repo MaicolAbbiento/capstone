@@ -97,8 +97,8 @@
                         </div>
                     }
                     @{
-                        string idtxt1 = "textarea" + (partiDaVisualizzare.Count + 1);
-                        string idtxt2 = "textarea" + (partiDaVisualizzare.Count + 2);
+                        string idtxt1 = "textarea" + (partiDaVisualizzare2.Count + 1);
+                        string idtxt2 = "textarea" + (partiDaVisualizzare2.Count + 2);
                     }
 
                     <div class="area">
@@ -113,7 +113,12 @@
             </div>
         </div>
     </div>
-    string link = "concludi/" + @Model.idprodotti;
+                        string link = "";
+                        string currentUrl = HttpContext.Current.Request.Url.AbsoluteUri;
+                        if(currentUrl == "https://localhost:44328/prodotti/buildpagedetail") {
+                            link = "concludi/" + @Model.idprodotti;
+                        }
+                        else { link = "../concludi/" + @Model.idprodotti; }
     <a href=@link> conferma e metti in vendita il prodotto </a>
 
 }
@@ -123,14 +128,14 @@
         $(document).ready(function () {
             // Seleziona l'elemento UL per il suo ID
             var impElement = document.getElementById("imp");
-            console.log(impElement, "c")
+
             // Conta il numero di elementi LI all'interno dell'UL
             var numeroDiElementiLI = impElement.getElementsByTagName("input").length;
             var numeroDiElementiLI2 = numeroDiElementiLI / 2
 
             $("#add-car").click(function () {
                 var div = `<div class="sep">
-                                                                                                                                                                                              <input id="imp${numeroDiElementiLI + 1}" />
+                                        <input id="imp${numeroDiElementiLI + 1}" />
 <input id="imp${numeroDiElementiLI + 2}" />
 </div>`
                 $("#imp").append(div)
@@ -161,15 +166,31 @@
 
                         }
                     }
+                    var url = window.location.href;
 
-                    $.ajax({
-                        method: 'POST',
-                        url: 'adddestcrizione',
-                        data: { imp: input },
-                        sucess: function (data) {
+                    var ultimaParte = url.substr(url.lastIndexOf('/') + 1);
 
-                        }
-                    })
+                    if (ultimaParte == "buildpagedetail") {
+                        $.ajax({
+                            method: 'POST',
+                            url: 'adddestcrizione',
+                            data: { imp: input },
+                            sucess: function (data) {
+
+                            }
+                        })
+                    }
+                    else {
+
+                        $.ajax({
+                            method: 'POST',
+                            url: '../adddestcrizione',
+                            data: { imp: input },
+                            sucess: function (data) {
+
+                            }
+                        })
+                    }
                 }
                 )
             }
@@ -180,8 +201,8 @@
             var numeroDiElementi = txtElement.getElementsByTagName("textarea").length;
             $("#add-car2").click(function () {
                 var div = `<div class="area">
-                                                                                                                                                                                            <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
-                                                                                                                                                                                        </div>`
+                                                                                                                                                                                                                    <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
+                                                                                                                                                                                                                </div>`
                 $("#imparea").append(div)
                 numeroDiElementi = txtElement.getElementsByTagName("textarea").length
 
@@ -189,8 +210,10 @@
             function gettext() {
                 $(`#btntext`).click(function () {
                     var input
+                    console.log(numeroDiElementi)
                     for (var i = 0; i < numeroDiElementi; i++) {
                         var val = $(`#textarea${i + 1}`).val();
+                        console.log(val)
                         if (val != undefined && val != "") {
                             if (input != undefined) {
                                 input += " tr5zx " + val
@@ -201,15 +224,31 @@
                             }
                         }
                     }
-                    alert()
-                    $.ajax({
-                        method: 'POST',
-                        url: 'adddestcrizionelg',
-                        data: { imp: input },
-                        sucess: function (data) {
-                            console.log(data)
-                        }
-                    })
+                    var url = window.location.href;
+
+                    var ultimaParte = url.substr(url.lastIndexOf('/') + 1);
+                    console.log(input)
+                    if (ultimaParte == "buildpagedetail") {
+                        console.log(input)
+                        $.ajax({
+                            method: 'POST',
+                            url: 'adddestcrizionelg',
+                            data: { imp: input },
+                            sucess: function (data) {
+                                console.log(data)
+                            }
+                        })
+                    }
+                    else {
+                        $.ajax({
+                            method: 'POST',
+                            url: '../adddestcrizionelg',
+                            data: { imp: input },
+                            sucess: function (data) {
+                                console.log(data)
+                            }
+                        })
+                    }
                 }
                 )
             } gettext()

@@ -65,6 +65,8 @@ namespace capstone.Models
 
         [StringLength(50)]
         public string numeroCartaDiCredito { get; set; }
+        public string cvv {  get; set; }
+        public string datascandenza { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<carello> carello { get; set; }

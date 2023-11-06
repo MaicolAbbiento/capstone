@@ -20,7 +20,5 @@ namespace capstone.Models
         public virtual DbSet<utenti> utenti { get; set; }
         public virtual DbSet<vendita> vendita { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
-
-      
     }
 }

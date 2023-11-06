@@ -203,6 +203,10 @@
     <Compile Include="Migrations\202310311400259_init2.designer.cs">
       <DependentUpon>202310311400259_init2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311061409443_a.cs" />
+    <Compile Include="Migrations\202311061409443_a.designer.cs">
+      <DependentUpon>202311061409443_a.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\aziende.cs" />
     <Compile Include="Models\carello.cs" />
@@ -291,11 +295,11 @@
     <Content Include="Views\Home\dettagli.cshtml" />
     <Content Include="Views\Home\modificarecensione.cshtml" />
     <Content Include="Views\Prodotti\modifica.cshtml" />
+    <Content Include="Views\gestionevendite\carello.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\img\" />
-    <Folder Include="Views\gestionevendite\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />
@@ -392,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310311400259_init2.resx">
       <DependentUpon>202310311400259_init2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311061409443_a.resx">
+      <DependentUpon>202311061409443_a.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

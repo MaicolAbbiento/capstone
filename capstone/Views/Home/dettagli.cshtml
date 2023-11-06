@@ -98,23 +98,24 @@
 
                     }
                 </ul>
-
+                @if (ViewBag.modifica == null) { 
                 <div class="form-group">
                     <div class="col-md-10">
                         <input type="number" id="number" />
                     </div>
-                </div>
+                </div>  
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" id="btn" value="aggiungi al carello" class="btn btn-default" />
+                    </div>
+                </div>}
                 @if (ViewBag.modifica != null)
                 {
                     string i = "../../prodotti/buildpagedetail/" + Model.idprodotti;
                     <a class="btn"
                        href=@i> cambia i dettagli del prodottto </a>
                 }
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="button" id="btn" value="aggiungi al carello" class="btn btn-default" />
-                    </div>
-                </div>
+
             </div>
         </div>
         <div id="err"></div>
@@ -185,27 +186,30 @@
             $("#btn").click(function () {
 
                 var valoreInput = $("#number").val();
-                console.log(valoreInput)
-                var url = window.location.href;
-                var id = url.substring(url.lastIndexOf('/') + 1);
-                $.ajax({
-                    method: 'POST',
-                    url: '../dettaglijs',
-                    data: { imp: valoreInput, idn: id },
-                    success: function (data) {
-                        $("#err").empty()
-                        let val = ""
-                        if (data != "ok") {
-                            val = `<p class="text-danger">${data} </p>`
-                        }
-                        else {
-                            val = `<p> prodotto aggiunto corretamente al carrello </p>`
-                        }
-                        $("#number").val("")
-                        $("#err").append(val)
-                    },
+                if (valoreInput > 0) {
 
-                })
+                    console.log(valoreInput)
+                    var url = window.location.href;
+                    var id = url.substring(url.lastIndexOf('/') + 1);
+                    $.ajax({
+                        method: 'POST',
+                        url: '../dettaglijs',
+                        data: { imp: valoreInput, idn: id },
+                        success: function (data) {
+                            $("#err").empty()
+                            let val = ""
+                            if (data != "ok") {
+                                val = `<p class="text-danger">${data} </p>`
+                            }
+                            else {
+                                val = `<p> prodotto aggiunto corretamente al carrello </p>`
+                            }
+                            $("#number").val("")
+                            $("#err").append(val)
+                        },
+
+                    })
+                }
             });
         });
         $(".comment").hover(function () {
@@ -247,7 +251,7 @@
                 success: function (data) {
                     if (data = !0) {
                         var err = `<p> inserire una valutazione </p>`
-                            $("#container").append(err)
+                        $("#container").append(err)
                         if (n > 0) {
 
                             location.reload();
