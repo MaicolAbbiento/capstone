@@ -193,7 +193,7 @@ namespace capstone.Controllers
                         int n2 = -1;
                         if (prodotti.descrizione != null)
                         {
-                            n2 = prodotti.descrizione.IndexOf(" dsi5zx ");
+                            n2 = prodotti.descrizione.IndexOf(" dsf5zx ");
                         }
                         string parteDopo = "";
                         if (n2 > 0)
@@ -213,7 +213,7 @@ namespace capstone.Controllers
                         int n2 = -1;
                         if (prodotti.descrizione != null)
                         {
-                            n2 = prodotti.descrizione.IndexOf(" dsi5zx ");
+                            n2 = prodotti.descrizione.IndexOf(" dsf5zx ");
                         }
 
                         string parteDopo = "";
@@ -244,7 +244,8 @@ namespace capstone.Controllers
         [HttpGet]
         public ActionResult modifica(int id)
         {
-            ViewBag.categoria = Listacategoria;
+            ViewBag.categoria = Listacategoria
+                ;
 
             imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
             prodotti prodotti = model1.prodotti.FirstOrDefault((e) => e.idaziende == i.idaziende && e.idprodotti == id);
@@ -265,10 +266,12 @@ namespace capstone.Controllers
             if (fotoprodotto != null && fotoprodotto.ContentLength > 0)
             {
                 p.invendita = prodotti.invendita;
-                p.valutazione = null;
+                p.valutazione =prodotti.valutazione;
                 p.idaziende = i.idaziende;
                 p.fotoprodotto = fotoprodotto.FileName;
                 p.descrizione = prodotti.descrizione;
+                p.idcategoria = Convert.ToInt32(p.categoria.categoria);
+                p.categoria = null;
                 string pathToSave = Path.Combine(Server.MapPath("~/Content/img"), p.fotoprodotto);
                 fotoprodotto.SaveAs(pathToSave);
                 model1.Entry(p).State = EntityState.Modified;
@@ -277,7 +280,7 @@ namespace capstone.Controllers
             else
             {
                 p.invendita = prodotti.invendita;
-                p.valutazione = null;
+                p.valutazione = prodotti.valutazione;
                 p.idaziende = i.idaziende;
                 p.descrizione = prodotti.descrizione;
                 p.idcategoria = Convert.ToInt32(p.categoria.categoria);

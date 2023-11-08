@@ -83,6 +83,7 @@ namespace capstone.Controllers
 
         [HttpGet]
         public ActionResult dettagli(int? id)
+
         {
             prodotti p = model1.prodotti.Find(id);
             if (p == null)
@@ -112,7 +113,10 @@ namespace capstone.Controllers
                     };
                     p.valutazione += item.valutazione;
                 }
-                p.valutazione /= p.recensioni.Count();
+                decimal val = Convert.ToDecimal(p.valutazione);
+                val /= p.recensioni.Count();
+                val = Math.Round(val);
+                p.valutazione = Convert.ToInt32(val);
             }
             model1.Entry(p).State = EntityState.Modified;
             model1.SaveChanges();

@@ -1,0 +1,32 @@
+﻿﻿@using capstone.Models
+@model List<carello>
+<div>
+    @{int? id = -1;}
+    @foreach (carello c in Model)
+    {
+
+        if (id != c.idvendita)
+        {
+            id = c.idvendita;
+            <p>ordine @id numero attulmente @c.vendita.stato </p>
+        }
+        <div class="d-flex">
+            <div>
+                <img src="~/Content/img/@c.prodotti.fotoprodotto" class="imgCarello" />
+            </div>
+            <div>
+                <h3>@c.prodotti.nomeprodotto </h3>
+                <p> @c.prodotti.prezzo€</p>
+                @if (@c.quantita > 1)
+                {
+                    <p>hai ordinato @c.quantita pezzi</p>
+                }
+                else
+                {
+            <p>hai ordinato un pezzo </p>
+                }
+            </div>
+        </div>
+
+    }
+</div>

@@ -1,35 +1,45 @@
 ﻿﻿@using capstone.Models
 @model List<carello>
-@{ int n = 0;}
-@foreach (carello c in Model)
-{
-    n++;
-    <div class="d-flex" id="div">
-        <div>
-            <img src="~/Content/img/@c.prodotti.fotoprodotto" class="imgCarello" />
+@{ int n = 0; int? q = 0; decimal? prezzo = 0;}
+
+<div id="div">
+    @foreach (carello c in Model)
+    {
+        n++;
+        q += c.quantita;
+        prezzo += c.quantita * c.prodotti.prezzo;
+        <div class="d-flex">
+            <div>
+                <img src="~/Content/img/@c.prodotti.fotoprodotto" class="imgCarello" />
+            </div>
+            <div>
+                <h3>@c.prodotti.nomeprodotto </h3>
+                <p> @c.prodotti.prezzo€</p>
+                @{ string id = "btn" + n;
+                    string id2 = "btni" + n;
+                    string idinput = "inp" + n;
+                    string idp = "p" + n;
+                }
+                @if (@c.quantita > 1)
+                {
+                    <p id=@idp style="display:block">hai @c.quantita pezzi nel carello</p>
+                }
+                else
+                {
+                    <p id=@idp style="display:block">hai un pezzo nel carello</p>
+                }
+                <button id=@id2 style="display:block"> modifica </button>
+                <input type="number" class="@c.idprodotti" value="@c.quantita" id=@idinput style="display:none" /> <button id=@id style="display:none"> conferma modifica </button>
+            </div>
         </div>
-        <div>
-            <h3>@c.prodotti.nomeprodotto </h3>
-            <p> @c.prodotti.prezzo€</p>
-            @{ string id = "btn" + n;
-                string id2 = "btni" + n;
-                string idinput = "inp" + n;
-                string idp = "p" + n;
-            }
-            @if (@c.quantita > 1)
-            {
-                <p id=@idp style="display:block">hai @c.quantita pezzi nel carello</p>
-            }
-            else
-            {
-                <p id=@idp style="display:block">hai un @c.quantita pezzo nel carello</p>
-            }
-            <button id=@id2 style="display:block"> modifica </button>
-            <input type="number" value="@c.quantita" id=@idinput style="display:none" /> <button id=@id style="display:none"> conferma modifica </button>
-        </div>
-    </div>
-}
-<a href=".\aquista" class="btn"> aquista prodotti</a>
+
+    }     <p class="@prezzo" id="repilogo"> hai @q nel carello per un totale di @prezzo€ </p>
+    @{ 
+        string link = "./aquista/" + prezzo;
+    }
+    <a href=@link class="btn"> aquista prodotti</a>
+</div>
+
 @section scripts {
     <script>
         $(document).ready(function () {
@@ -37,8 +47,9 @@
 
             // Conta il numero di elementi LI all'interno dell'UL
             var numeroDiElementiLI = impElement.getElementsByTagName("input").length;
+            console.log(numeroDiElementiLI)
             for (let i = 0; i < numeroDiElementiLI; i++) {
-
+                console.log(i)
                 $(`#btni${i + 1}`).click(function () {
 
                     $(`#btni${i + 1}`).toggle();
@@ -53,23 +64,23 @@
                     $(`#inp${i + 1}`).toggle();
                     $(`#p${i + 1}`).toggle();
                     var valore = $(`#inp${i + 1}`).val();
-                    var inp = ""
-                    if (valore > 1) {
-                        inp = ` hai ${valore} pezzi nel carello`
-                    }
-                    else {
 
-                        inp = `hai un ${valore} pezzo nel carello`
-
-                    }
-                    $(`#p${i + 1}`).text(inp);
-
+                    var posizioneCorrente = window.scrollY;
+                    var id = $(`#inp${i + 1}`).attr("class").split(" ")[0]
+                    console.log(id)
+                    var int = 0
                     $.ajax({
                         method: 'POST',
                         url: 'modifica',
-                        data: { component: inp },
-                        success: function (data) { }
+                        data: { component: valore, idprod : id},
+                        success: function (data) {
+                            location.reload();
+
+                            window.scrollTo(0, posizioneCorrente);
+                        }
+                      
                     })
+                 
                 })
             }
         })

@@ -4,24 +4,26 @@
     padding-left: 15px;
     padding-right: 15px;
 }
-.imgpr{
-    height :400px;
-    width:400px;
-    margin-right : 20px
+
+.imgpr {
+    height: 400px;
+    width: 400px;
+    margin-right: 20px
 }
+
 .area textarea {
     width: 437px;
     height: 100px;
 }
+
 .comment {
-    color: #fea21c; 
-    cursor: pointer; 
+    color: #fea21c;
+    cursor: pointer;
 }
 
 .fa-solid {
-    color: #fea21c; 
+    color: #fea21c;
 }
-
 
 .imgCarello {
     height: 200px;
