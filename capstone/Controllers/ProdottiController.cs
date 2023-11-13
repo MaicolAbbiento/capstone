@@ -60,6 +60,8 @@ namespace capstone.Controllers
                         p.idaziende = i.idaziende;
                         p.fotoprodotto = fotoprodotto.FileName;
                         p.descrizione = null;
+                        p.idcategoria = Convert.ToInt32(p.categoria.categoria);
+                        p.categoria = null;
                         string pathToSave = Path.Combine(Server.MapPath("~/Content/img"), p.fotoprodotto);
                         fotoprodotto.SaveAs(pathToSave);
                         model1.prodotti.Add(p);
@@ -68,10 +70,17 @@ namespace capstone.Controllers
                     }
                     else
                     {
+                        ViewBag.categoria = Listacategoria;
                         ViewBag.fotoprodotto = "inserire un imaggine";
+                        return View();
                     }
                 }
-                return View();
+                else
+                {
+                    ViewBag.categoria = Listacategoria;
+                    return View();
+                }
+       
             }
             return RedirectToAction("buildpagedetail");
         }
@@ -115,9 +124,9 @@ namespace capstone.Controllers
             if (imp != null)
             {
                 prodotti prodotti = new prodotti();
-                if (Session["id"] != null)
+                if (Session["id"] == null)
                 {
-                    int id = (int)Session["id"];
+             
                     imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
                     prodotti = model1.prodotti.FirstOrDefault((e) => e.invendita == false && e.idaziende == i.idaziende);
                 }

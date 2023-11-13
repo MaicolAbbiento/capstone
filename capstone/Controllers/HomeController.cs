@@ -16,9 +16,9 @@ namespace capstone.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            List<prodotti> p = model1.prodotti.ToList();
 
-            return View();
+            return View(p);
         }
 
         [HttpGet]

@@ -17,8 +17,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.fotoprodotto, htmlAttributes: new { @class = "control-label " })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.fotoprodotto, new { @class = "form-control w-100 rounded-pill p-2", type = "file", @accept = "image/*" })
+                @Html.TextBoxFor(model => model.fotoprodotto, new { @class = "form-control", type = "file", @accept = "image/*" })
                 @Html.ValidationMessageFor(model => model.fotoprodotto, "", new { @class = "text-danger" })
+                <p class = "text-danger">@ViewBag.fotoprodotto</p> 
             </div>
         </div>
 

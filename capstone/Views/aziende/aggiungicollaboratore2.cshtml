@@ -10,14 +10,14 @@
     <table class="table">
         <thead>
             <tr>
-                <th>nome azienda</th>
+                <th>Ragione Sociale</th>
                 <th>telefono aziendale</th>
                 <th>categoria</th>
                 <th>paese</th>
                 <th>citta</th>
                 <th>provinca</th>
                 <th>CAP</th>
-                <th>Ragione Sociale</th>
+                
 
                 <th>link</th>
             </tr>
@@ -35,8 +35,8 @@
                     <td>@a.CAP</td>
                     @if (User.IsInRole("amministratore"))
                     {
-                        <td><a class="btn-danger" href="./nonapprovare/@a.idaziende"> non approvare</a></td>
-                        <td><a class="btn-success" href="./approvare/@a.idaziende"> approva</a></td>
+                        <td><a class="btn-danger" href="./nonapprovare/@a.idaziende"> non approvare</a>
+                        <a class="btn-success" href="./approvare/@a.idaziende"> approva</a></td>
                     }
                     else
                     {

@@ -62,8 +62,8 @@
                         string idf2 = "imp" + (i + 2);
 
                         <div class="sep">
-                            <input id=@idf1 placeholder="inserire nome campo" value="@partiDaVisualizzare[i]" />
-                            <input id=@idf2 placeholder="inserire descrizione" type="text" value="@partiDaVisualizzare[i+1]" />
+                            <input id=@idf1 class="area" placeholder="inserire nome campo" value="@partiDaVisualizzare[i]" />
+                            <input id=@idf2 class="area" placeholder="inserire descrizione" type="text" value="@partiDaVisualizzare[i+1]" />
                         </div>
                     }
                 }
@@ -82,10 +82,11 @@
                     <input id=@id4 />
                 </div>
             </div>
-            <button id="btn"> aggiungi carateristiche</button>
+            <button id="btn"> aggiungi carateristiche</button>   
+            <a id="add-car" class="btn"> aggiungi riga di caratteristiche</a>
             <div>
             </div>
-            <a id="add-car" class="btn"> aggiungi riga di caratteristiche</a>
+
             <div>
                 <div id="imparea">
                     <h4>inserisci descrizioni come per esempio le fuzioni o dettagli delle carateristiche</h4>
@@ -93,7 +94,7 @@
                     {
                         string idf1 = "textarea" + (i + 1);
                         <div class="area">
-                            <textarea id=@idf1> @partiDaVisualizzare2[i] </textarea>
+                            <textarea id=@idf1 class="area"> @partiDaVisualizzare2[i] </textarea>
                         </div>
                     }
                     @{
@@ -102,10 +103,10 @@
                     }
 
                     <div class="area">
-                        <textarea id=@idtxt1> </textarea>
+                        <textarea id=@idtxt1 class="area"> </textarea>
                     </div>
                     <div class="area">
-                        <textarea id=@idtxt2> </textarea>
+                        <textarea id=@idtxt2 class="area"> </textarea>
                     </div>
                 </div>
                 <a id="add-car2" class="btn"> aggiungi riga di caratteristiche</a>
@@ -113,12 +114,17 @@
             </div>
         </div>
     </div>
-                        string link = "";
-                        string currentUrl = HttpContext.Current.Request.Url.AbsoluteUri;
-                        if(currentUrl == "https://localhost:44328/prodotti/buildpagedetail") {
-                            link = "concludi/" + @Model.idprodotti;
-                        }
-                        else { link = "../concludi/" + @Model.idprodotti; }
+    string link = "";
+    string currentUrl = HttpContext.Current.Request.Url.AbsoluteUri;
+
+    string[] partidellastringa = currentUrl.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+    string asid = partidellastringa.Last();
+
+    if (asid == "buildpagedetail")
+    {
+        link = "concludi/" + @Model.idprodotti;
+    }
+    else { link = "../concludi/" + @Model.idprodotti; }
     <a href=@link> conferma e metti in vendita il prodotto </a>
 
 }
@@ -135,7 +141,7 @@
 
             $("#add-car").click(function () {
                 var div = `<div class="sep">
-                                        <input id="imp${numeroDiElementiLI + 1}" />
+                                                    <input id="imp${numeroDiElementiLI + 1}" />
 <input id="imp${numeroDiElementiLI + 2}" />
 </div>`
                 $("#imp").append(div)
@@ -175,7 +181,7 @@
                             method: 'POST',
                             url: 'adddestcrizione',
                             data: { imp: input },
-                            sucess: function (data) {
+                            success: function (data) {
 
                             }
                         })
@@ -201,8 +207,8 @@
             var numeroDiElementi = txtElement.getElementsByTagName("textarea").length;
             $("#add-car2").click(function () {
                 var div = `<div class="area">
-                                                                                                                                                                                                                    <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
-                                                                                                                                                                                                                </div>`
+                                                                                                                                                                                                                                <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
+                                                                                                                                                                                                                            </div>`
                 $("#imparea").append(div)
                 numeroDiElementi = txtElement.getElementsByTagName("textarea").length
 
