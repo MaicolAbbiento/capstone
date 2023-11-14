@@ -2,6 +2,7 @@
 using capstone.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -14,11 +15,44 @@ namespace capstone.Controllers
     {
         private Model1 model1 = new Model1();
 
-        public ActionResult Index()
+        public ActionResult Index(string h)
         {
-            List<prodotti> p = model1.prodotti.ToList();
+            if (h == null)
+            {
+                List<prodotti> p = model1.prodotti.ToList();
+                p.OrderBy(x => Guid.NewGuid()).ToList();
+                p.OrderByDescending(e => e.valutazione);
+                return View(p);
+            }
+            else
+            {
+                List<prodotti> p = model1.prodotti.ToList();
+                p.OrderBy(x => Guid.NewGuid()).ToList();
+                p.OrderByDescending(e => e.valutazione);
+                List<prodotti> prodotti = new List<prodotti>();
+                foreach (var item in p)
+                {
+                    if (item.nomeprodotto.Contains(h))
+                    {
+                        prodotti.Add(item);
+                    }
+                }
+               foreach (var item in prodotti)
+                {
+                    p.Remove(item);
+                   
+                }
+                foreach (var item in p)
+                {
 
-            return View(p);
+                    if (item.descrizione.Contains(h))
+                    {
+                        prodotti.Add(item);
+                    }
+                }
+                ViewBag.ok = true;
+                return View(prodotti);
+            }
         }
 
         [HttpGet]

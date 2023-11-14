@@ -6,6 +6,7 @@ namespace capstone.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
     using System.Drawing;
+    using System.Web.Razor.Generator;
     using System.Web.UI.WebControls;
 
     [Table("aziende")]

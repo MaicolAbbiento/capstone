@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - Applicazione ASP.NET</title>
@@ -21,7 +21,7 @@
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li> <input type="text" id="input"/> <i class="fa-solid fa-magnifying-glass" style="color: #303134;" id="i"></i>  </li>
+                    <li> <input type="text" id="input" /> <i class="fa-solid fa-magnifying-glass" style="color: #303134;" id="i"></i>  </li>
                 </ul>
             </div>
         </div>
@@ -29,14 +29,40 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
+
+    </div>
+
         <footer>
             <p>&copy; @DateTime.Now.Year - Applicazione ASP.NET</p>
         </footer>
-    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script src='https://codepen.io/Hyperplexed/pen/xxYJYjM/54407644e24173ad6019b766443bf2a6.js'></script>
+    <script>
+        $(document).ready(function () {
+            $("#i").click(function () {
+                var url = window.location.href
+
+                var arrurl = url.split("/")
+
+                var sorgente = arrurl[0] + "//" + arrurl[2] + "/Home/Index"
+                console.log(sorgente)
+
+
+
+                var input = $("#input").val()
+                $.ajax({
+                    method: 'POST',
+                    url: sorgente,
+                    data: { h: input },
+                    success: function (data) {
+
+                    }
+                })
+            })
+        })
+    </script>
 </body>
 </html>
