@@ -80,7 +80,6 @@ namespace capstone.Controllers
                     ViewBag.categoria = Listacategoria;
                     return View();
                 }
-       
             }
             return RedirectToAction("buildpagedetail");
         }
@@ -126,7 +125,6 @@ namespace capstone.Controllers
                 prodotti prodotti = new prodotti();
                 if (Session["id"] == null)
                 {
-             
                     imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
                     prodotti = model1.prodotti.FirstOrDefault((e) => e.invendita == false && e.idaziende == i.idaziende);
                 }
@@ -275,7 +273,7 @@ namespace capstone.Controllers
             if (fotoprodotto != null && fotoprodotto.ContentLength > 0)
             {
                 p.invendita = prodotti.invendita;
-                p.valutazione =prodotti.valutazione;
+                p.valutazione = prodotti.valutazione;
                 p.idaziende = i.idaziende;
                 p.fotoprodotto = fotoprodotto.FileName;
                 p.descrizione = prodotti.descrizione;

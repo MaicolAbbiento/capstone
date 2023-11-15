@@ -1,30 +1,34 @@
 ﻿/* Set padding to keep content from hitting the edges */
-html{
-    height:100%
+html {
+    height: 100%
 }
+
 body {
     background-color: #1b1a19;
     color: #d2d0ce;
-    font-size: 0.9em
+    font-size: 0.9em;
+    height: 100%
 }
+
 footer {
     bottom: 0;
     position: sticky;
     background-color: #11100f;
     z-index: 10;
-    width:100%
-    
+    width: 100%
 }
+
 @media screen and (max-width:800px) {
     body {
         font-size: 0.7em
     }
 }
 
-.body-content {
+.contentDiv {
     margin-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
+    min-height: 90.5%;
 }
 
 .imgpr {
@@ -83,7 +87,7 @@ textarea {
     border-radius: 14px;
     border-color: transparent;
     margin: 5px;
-    padding: 12px 57px;  
+    padding: 12px 57px;
 }
 
 input {
@@ -100,12 +104,10 @@ input {
     width: 14px
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
     background: #303134
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
     background: #545454;
 }
@@ -113,4 +115,7 @@ input {
 #i {
     font-size: 1.5rem;
     cursor: pointer;
+}
+.indexbtn{
+    padding:4px
 }
