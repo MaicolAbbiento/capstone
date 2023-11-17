@@ -17,9 +17,22 @@ namespace capstone.Controllers
 
         public ActionResult Index()
         {
-            List<prodotti> p = model1.prodotti.Where((e) => e.invendita == true).ToList();
-            p.OrderBy(x => Guid.NewGuid()).ToList();
-            p.OrderByDescending(e => e.valutazione);
+            List<prodotti> p = new List<prodotti>();
+
+            if (User.IsInRole("d-manager"))
+            {
+                imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
+
+                p = model1.prodotti.Where((e) => e.idaziende == i.idaziende).ToList();
+                p.OrderBy(x => Guid.NewGuid()).ToList();
+                p.OrderByDescending(e => e.valutazione);
+            }
+            else
+            {
+                p = model1.prodotti.Where((e) => e.invendita == true).ToList();
+                p.OrderBy(x => Guid.NewGuid()).ToList();
+                p.OrderByDescending(e => e.valutazione);
+            }
             return View(p);
         }
 
@@ -180,6 +193,7 @@ namespace capstone.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public JsonResult dettaglijs(int imp, int idn)
         {
             prodotti p = model1.prodotti.Find(idn);
@@ -252,6 +266,7 @@ namespace capstone.Controllers
             return Json(success);
         }
 
+        [Authorize]
         [HttpPost]
         public JsonResult comment(string textarea, int valutazione, int id, string titolod)
         {
@@ -259,19 +274,29 @@ namespace capstone.Controllers
             if (valutazione > 0)
             {
                 utenti U = model1.utenti.FirstOrDefault((e) => e.username == User.Identity.Name);
-                if (U != null)
+                imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.idUtenti == U.idUtenti);
+                aziende a = new aziende();
+                if (i != null)
                 {
-                    recensioni r = model1.recensioni.FirstOrDefault((e) => e.idprodotti == id && e.idUtenti == U.idUtenti);
-                    if (r == null)
+                    a = model1.aziende.FirstOrDefault((e) => e.idaziende == i.idaziende);
+                }
+
+                if (a == null)
+                {
+                    if (U != null)
                     {
-                        recensioni.idUtenti = U.idUtenti;
-                        recensioni.titolo = titolod;
-                        recensioni.idprodotti = id;
-                        recensioni.valutazione = valutazione;
-                        recensioni.descrizione = textarea;
-                        Model1 db = new Model1();
-                        db.recensioni.Add(recensioni);
-                        db.SaveChanges();
+                        recensioni r = model1.recensioni.FirstOrDefault((e) => e.idprodotti == id && e.idUtenti == U.idUtenti);
+                        if (r == null)
+                        {
+                            recensioni.idUtenti = U.idUtenti;
+                            recensioni.titolo = titolod;
+                            recensioni.idprodotti = id;
+                            recensioni.valutazione = valutazione;
+                            recensioni.descrizione = textarea;
+                            Model1 db = new Model1();
+                            db.recensioni.Add(recensioni);
+                            db.SaveChanges();
+                        }
                     }
                 }
             }
@@ -283,6 +308,7 @@ namespace capstone.Controllers
             return Json(recensioni);
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult modificarecensione(int id)
         {

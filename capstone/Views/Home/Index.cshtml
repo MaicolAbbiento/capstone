@@ -1,15 +1,14 @@
 ﻿﻿@using capstone.Models;
 @model List<prodotti>
 
-
-
-
-    <h2 class="text-center text-uppercase mb-4"> scopri i nostri migliori prodotti  </h2>
+@if (User.IsInRole("d-manager"))
+{
     <div class="d-flex flex-wrap">
         @for (var i = 0; i < 10; i++)
         {
             if (i < Model.Count)
             {
+                <h2 class="text-center text-uppercase mb-4"> i tuoi prodotti</h2>
                 <div class="me-3" style="width: 18rem;">
                     <img src="~/Content/img/@Model[i].fotoprodotto" class="imgCarello" />
                     <div class="card-body">
@@ -40,10 +39,56 @@
                         }
                         <p class="card-text"> @Model[i].prezzo€</p>
 
-                        <a href="..\Home\dettagli\@Model[i].idprodotti" class="btn btn-primary indexbtn">dettagli prodotto</a>
+                        <a href="..\prodotti\modifica\@Model[i].idprodotti" class="btn btn-primary indexbtn">modifica prodotto</a>
                     </div>
                 </div>
 
             }
         }
     </div>
+
+}
+
+<h2 class="text-center text-uppercase mb-4"> scopri i nostri migliori prodotti  </h2>
+<div class="d-flex flex-wrap">
+    @for (var i = 0; i < 10; i++)
+    {
+        if (i < Model.Count)
+        {
+            <div class="me-3" style="width: 18rem;">
+                <img src="~/Content/img/@Model[i].fotoprodotto" class="imgCarello" />
+                <div class="card-body">
+                    @{
+                        int n = Model[i].nomeprodotto.Length;
+                    }
+                    <h5 class="card-title">
+                        @Model[i].nomeprodotto.Substring(0, Math.Min(45, n))@if (Model[i].nomeprodotto.Length > 40)
+                        {<span>...</span>}
+                    </h5>
+                    @if (@Model[i].valutazione != null && @Model[i].valutazione != 0)
+                    {
+                        for (var i2 = 0; i2 < Model[i].valutazione; i2++)
+                        {
+
+                            <i class="fa-solid fa-star" style="color: #fea21c;"></i>
+
+                        }
+
+                        int n4 = 5 - (int)Model[i].valutazione;
+
+                        for (var i2 = 0; i2 < n4; i2++)
+                        {
+
+                            <i class="fa-regular fa-star" style="color: #fea21c;"></i>
+                        }
+
+                    }
+                    <p class="card-text"> @Model[i].prezzo€</p>
+
+                    <a href="..\Home\dettagli\@Model[i].idprodotti" class="btn btn-primary indexbtn">dettagli prodotto</a>
+                </div>
+            </div>
+
+        }
+    }
+</div>

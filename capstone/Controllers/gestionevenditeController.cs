@@ -18,6 +18,7 @@ namespace capstone.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult carello()
         {
@@ -34,6 +35,7 @@ namespace capstone.Controllers
             return RedirectToAction("index", "home");
         }
 
+        [Authorize]
         public JsonResult modifica(int component, int idprod)
         {
             utenti utenti = model1.utenti.FirstOrDefault((e) => e.username == User.Identity.Name);
@@ -51,6 +53,7 @@ namespace capstone.Controllers
             return Json(idprod);
         }
 
+        [Authorize]
         public ActionResult aquista(string id)
         {
             utenti utenti = model1.utenti.FirstOrDefault((e) => e.username == User.Identity.Name);
@@ -65,6 +68,7 @@ namespace capstone.Controllers
             return RedirectToAction("statoSpedizioni");
         }
 
+        [Authorize]
         public ActionResult statoSpedizioni()
         {
             utenti utenti = model1.utenti.FirstOrDefault((e) => e.username == User.Identity.Name);
