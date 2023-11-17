@@ -8,6 +8,7 @@ namespace capstone.Models
 {
     public class prodottiqury
     {
+        public int idprodotti { get; set; }
         public string fotoprodotto { get; set; }
 
         [Required(ErrorMessage = "campo obligatorio")]
@@ -19,6 +20,7 @@ namespace capstone.Models
         [Required(ErrorMessage = "campo obligatorio")]
         public decimal? prezzo { get; set; }
 
+        public int valutazione { get; set; }
         public string categoria { get; set; }
     }
 }

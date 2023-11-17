@@ -39,6 +39,9 @@ namespace capstone.Controllers
                     p2.nomeprodotto = item.nomeprodotto;
                     p2.fotoprodotto = item.fotoprodotto;
                     p2.prezzo = item.prezzo;
+                    p2.valutazione = (int)item.valutazione;
+                    p2.idprodotti = item.idprodotti;
+
                     prodotti.Add(p2);
                 }
             }
@@ -54,6 +57,8 @@ namespace capstone.Controllers
                     p2.nomeprodotto = item.nomeprodotto;
                     p2.fotoprodotto = item.fotoprodotto;
                     p2.prezzo = item.prezzo;
+                    p2.valutazione = (int)item.valutazione;
+                    p2.idprodotti = item.idprodotti;
                     prodotti.Add(p2);
                 }
             }

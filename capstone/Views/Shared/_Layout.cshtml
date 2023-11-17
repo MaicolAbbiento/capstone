@@ -28,12 +28,11 @@
     </nav>
     <div class="contentDiv" id="content">
         @RenderBody()
-
     </div>
 
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Applicazione ASP.NET</p>
-        </footer>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Applicazione ASP.NET</p>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -48,9 +47,6 @@
 
                 var sorgente = arrurl[0] + "//" + arrurl[2] + "/Home/cerca"
 
-
-
-
                 var input = $("#input").val()
                 $("#input").empty()
                 $("#content").empty()
@@ -61,34 +57,39 @@
                     data: { h: input },
                     success: function (data) {
 
-                        var content = ""
-                        for (var i = 0; data.length>i; i++) {
-                            var div1 = " ";
+                    
+                      
+                        var content =`<div class="d-flex flex-wrap">`
+                        for (var i = 0; data.length > i; i++) {
+                       
+                            var div13 = " ";
                             if (data[i].nomeprodotto.length > 45) {
                                 var sorgente3 = arrurl[0] + "//" + arrurl[2] + "/Content/img/" + data[i].fotoprodotto
-                                var divg = data[i].nomeprodotto.toString().Substring(0, 45)
-                             div1 += `
-                               <div class="me-3" style="width: 18rem;">
-       <img src=${sorgente3} class="imgCarello" />
-       <div class="card-body">
+                                var divg = data[i].nomeprodotto.slice(0, 45)
+                                div13 += `
+                                   <div class="me-3" style="width: 18rem;">
+           <img src=${sorgente3} class="imgCarello" />
+           <div class="card-body">
 
-           <h5 class="card-title">
-           ${divg}...
-           </h5>`}
+               <h5 class="card-title">
+               ${divg}...
+               </h5>   `} 
                             else {
-                                var sorgente3 = arrurl[0] + "//" + arrurl[2] + "/Content/img/"+ data[i].fotoprodotto
-                                div1 = `
-                        <div class="me-3" style="width: 18rem;">
+                                var sorgente3 = arrurl[0] + "//" + arrurl[2] + "/Content/img/" + data[i].fotoprodotto
+                                div13 += `
+                            <div class="me-3" style="width: 18rem;">
 <img src=${sorgente3} class="imgCarello" />
 <div class="card-body">
 
-    <h5 class="card-title">
-    ${data[i].nomeprodotto}
-    </h5>`}
-                            var div2 = " "
-                            if (data[i].valutazione != null && data.valutazione != 0) {
-                                for (var i2 = 0; i2 < p.valutazione; i2++) {
-                                    if (di2 != null) {
+        <h5 class="card-title">
+        ${data[i].nomeprodotto}
+        </h5>  `}
+                            var div2 = " " 
+                          
+                            if (data[i].valutazione != null && data[i].valutazione != 0) {
+
+                                for (var i2 = 0; i2 < data[i].valutazione; i2++) {
+                                    if (div2 != null) {
                                         div2 += `<i class="fa-solid fa-star" style="color: #fea21c;"></i>`
                                     }
                                     else {
@@ -96,7 +97,7 @@
                                     }
                                 }
 
-       var n4 = 5 - data.valutazione;
+                                var n4 = 5 - data[i].valutazione;
 
                                 for (var i2 = 0; i2 < n4; i2++) {
 
@@ -104,28 +105,28 @@
                                 }
 
                             }
-                            var sorgente2 = arrurl[0] + "//" + arrurl[2] + data.idprodotti
+                            var sorgente2 = arrurl[0] + "//" + arrurl[2] + "/Home/dettagli/" + data.idprodotti
                             var div3 = " "
                             div3 += `
-           <p class="card-text"> ${data[i].prezzo}€</p>
+               <p class="card-text"> ${data[i].prezzo}€</p>
 
-
-                            <a href= ${sorgente2} class="btn btn-primary indexbtn">dettagli prodotto</a>
-       </div>
-   </div>`
+                                <a href= ${sorgente2} class="btn btn-primary indexbtn">dettagli prodotto</a>
+           </div>
+       </div>`
+                            var p = div13  + div2 + div3 
+                
+                            content += p
                         }
+                  
+                        content += "</div>" + "</div>"
+                        console.log(content)
+                        $("#content").append(content)
+                    }
 
-                        var p = ` <div class="d-flex flex-wrap">` + div1 + div2 + div3 +   `</div> `
-                        $("#content").append(p)
-                        }
 
-
-
-
-                    })
                 })
             })
-
+        })
     </script>
 </body>
 </html>
