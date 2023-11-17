@@ -15,44 +15,50 @@ namespace capstone.Controllers
     {
         private Model1 model1 = new Model1();
 
-        public ActionResult Index(string h)
+        public ActionResult Index()
         {
-            if (h == null)
-            {
-                List<prodotti> p = model1.prodotti.ToList();
-                p.OrderBy(x => Guid.NewGuid()).ToList();
-                p.OrderByDescending(e => e.valutazione);
-                return View(p);
-            }
-            else
-            {
-                List<prodotti> p = model1.prodotti.ToList();
-                p.OrderBy(x => Guid.NewGuid()).ToList();
-                p.OrderByDescending(e => e.valutazione);
-                List<prodotti> prodotti = new List<prodotti>();
-                foreach (var item in p)
-                {
-                    if (item.nomeprodotto.Contains(h))
-                    {
-                        prodotti.Add(item);
-                    }
-                }
-               foreach (var item in prodotti)
-                {
-                    p.Remove(item);
-                   
-                }
-                foreach (var item in p)
-                {
+            List<prodotti> p = model1.prodotti.Where((e) => e.invendita == true).ToList();
+            p.OrderBy(x => Guid.NewGuid()).ToList();
+            p.OrderByDescending(e => e.valutazione);
+            return View(p);
+        }
 
-                    if (item.descrizione.Contains(h))
-                    {
-                        prodotti.Add(item);
-                    }
+        public JsonResult cerca(string h)
+        {
+            List<prodotti> p = model1.prodotti.Where((e) => e.invendita == true).ToList();
+            p.OrderBy(x => Guid.NewGuid()).ToList();
+            p.OrderByDescending(e => e.valutazione);
+            List<prodottiqury> prodotti = new List<prodottiqury>();
+            List<prodotti> prodotti2 = new List<prodotti>();
+            foreach (var item in p)
+            {
+                if (item.nomeprodotto.Contains(h))
+                {
+                    prodotti2.Add(item);
+                    prodottiqury p2 = new prodottiqury();
+                    p2.nomeprodotto = item.nomeprodotto;
+                    p2.fotoprodotto = item.fotoprodotto;
+                    p2.prezzo = item.prezzo;
+                    prodotti.Add(p2);
                 }
-                ViewBag.ok = true;
-                return View(prodotti);
             }
+            foreach (var item in prodotti2)
+            {
+                p.Remove(item);
+            }
+            foreach (var item in p)
+            {
+                if (item.descrizione.Contains(h))
+                {
+                    prodottiqury p2 = new prodottiqury();
+                    p2.nomeprodotto = item.nomeprodotto;
+                    p2.fotoprodotto = item.fotoprodotto;
+                    p2.prezzo = item.prezzo;
+                    prodotti.Add(p2);
+                }
+            }
+
+            return Json(prodotti);
         }
 
         [HttpGet]

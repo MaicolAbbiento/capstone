@@ -214,6 +214,7 @@
     <Compile Include="Models\imprenditori.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\prodotti.cs" />
+    <Compile Include="Models\prodottiqury.cs" />
     <Compile Include="Models\recensioni.cs" />
     <Compile Include="Models\SiteRole.cs" />
     <Compile Include="Models\utenti.cs" />

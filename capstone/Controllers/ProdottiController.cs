@@ -281,8 +281,9 @@ namespace capstone.Controllers
                 p.categoria = null;
                 string pathToSave = Path.Combine(Server.MapPath("~/Content/img"), p.fotoprodotto);
                 fotoprodotto.SaveAs(pathToSave);
-                model1.Entry(p).State = EntityState.Modified;
-                model1.SaveChanges();
+                Model1 db = new Model1();   
+                db.Entry(p).State = EntityState.Modified;
+                db.SaveChanges();
             }
             else
             {

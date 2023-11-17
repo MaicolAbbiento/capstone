@@ -1,11 +1,8 @@
 ﻿﻿@using capstone.Models;
 @model List<prodotti>
-@if (ViewBag.ok != null)
-{
 
-}
-else
-{
+
+
 
     <h2 class="text-center text-uppercase mb-4"> scopri i nostri migliori prodotti  </h2>
     <div class="d-flex flex-wrap">
@@ -19,8 +16,10 @@ else
                         @{
                             int n = Model[i].nomeprodotto.Length;
                         }
-                        <h5 class="card-title">@Model[i].nomeprodotto.Substring(0, Math.Min(45, n))@if (Model[i].nomeprodotto.Length > 40) {<span>...</span> }
- </h5>
+                        <h5 class="card-title">
+                            @Model[i].nomeprodotto.Substring(0, Math.Min(45, n))@if (Model[i].nomeprodotto.Length > 40)
+                            {<span>...</span>}
+                        </h5>
                         @if (@Model[i].valutazione != null && @Model[i].valutazione != 0)
                         {
                             for (var i2 = 0; i2 < Model[i].valutazione; i2++)
@@ -48,4 +47,3 @@ else
             }
         }
     </div>
-}

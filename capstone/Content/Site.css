@@ -1,15 +1,21 @@
 ﻿/* Set padding to keep content from hitting the edges */
-html {
-    height: 100%
+
+
+footer {
+    margin-top: auto;
 }
 
+main {
+    flex: 1;
+}
 body {
     background-color: #1b1a19;
     color: #d2d0ce;
     font-size: 0.9em;
-    height: 100%
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
-
 footer {
     bottom: 0;
     position: sticky;
@@ -47,6 +53,7 @@ footer {
     cursor: pointer;
 }
 
+
 .fa-solid {
     color: #fea21c;
 }
@@ -57,7 +64,7 @@ footer {
     margin-right: 20px
 }
 
-input, textarea {
+input, textarea , .input{
     padding-top: unset;
     overflow: hidden;
     height: unset;
@@ -68,13 +75,21 @@ input, textarea {
     color: #d2d0ce;
     border: none;
     margin: 10px;
+    margin-left:0px;
     padding: 12px;
     border-radius: 15px;
+    width: 250px;
 }
-
-textarea {
-    line-height: 36px;
-}
+    input[type=file]::file-selector-button {
+        background-color: #303134;
+        color: #d2d0ce;
+        border-radius: 15px;
+        cursor: pointer;
+        border-color: transparent;
+    }
+    textarea {
+        line-height: 36px;
+    }
 
     input:hover, textarea:hover {
         box-shadow: 0 4px 12px rgba(23,23,23,0.9);

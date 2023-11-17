@@ -82,7 +82,7 @@
                     <input id=@id4 />
                 </div>
             </div>
-            <button id="btn"> aggiungi carateristiche</button>   
+            <button id="btn"> aggiungi carateristiche</button>
             <a id="add-car" class="btn"> aggiungi riga di caratteristiche</a>
             <div>
             </div>
@@ -115,6 +115,7 @@
         </div>
     </div>
     string link = "";
+    string link2 = "";
     string currentUrl = HttpContext.Current.Request.Url.AbsoluteUri;
 
     string[] partidellastringa = currentUrl.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
@@ -123,9 +124,15 @@
     if (asid == "buildpagedetail")
     {
         link = "concludi/" + @Model.idprodotti;
+        link2 = "modifica/" + Model.idprodotti;
     }
-    else { link = "../concludi/" + @Model.idprodotti; }
-    <a href=@link> conferma e metti in vendita il prodotto </a>
+    else
+    {
+        link = "../concludi/" + @Model.idprodotti;
+        link2 = "../modifica/" + Model.idprodotti;
+    }
+    <a class="btn" href=@link> conferma e metti in vendita il prodotto </a>
+    <a class="btn" href=@link2> modifica nome prezzo e immaggine del prodotto </a>
 
 }
 
@@ -141,7 +148,7 @@
 
             $("#add-car").click(function () {
                 var div = `<div class="sep">
-                                                    <input id="imp${numeroDiElementiLI + 1}" />
+                                                                    <input id="imp${numeroDiElementiLI + 1}" />
 <input id="imp${numeroDiElementiLI + 2}" />
 </div>`
                 $("#imp").append(div)
@@ -207,8 +214,8 @@
             var numeroDiElementi = txtElement.getElementsByTagName("textarea").length;
             $("#add-car2").click(function () {
                 var div = `<div class="area">
-                                                                                                                                                                                                                                <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
-                                                                                                                                                                                                                            </div>`
+                                                                                                                                                                                                                                                <textarea id="textarea${numeroDiElementi + 1}"> </textarea>
+                                                                                                                                                                                                                                            </div>`
                 $("#imparea").append(div)
                 numeroDiElementi = txtElement.getElementsByTagName("textarea").length
 
