@@ -3,7 +3,7 @@
 
 @if (User.IsInRole("d-manager"))
 {
-    <div class="d-flex flex-wrap">
+    <div class="d-flex flex-wrap ms-2">
         @for (var i = 0; i < 10; i++)
         {
             if (i < Model.Count)
@@ -50,7 +50,8 @@
 }
 
 <h2 class="text-center text-uppercase mb-4"> scopri i nostri migliori prodotti  </h2>
-<div class="d-flex flex-wrap">
+<div class="d-flex flex-wrap  ms-2
+     ">
     @for (var i = 0; i < 10; i++)
     {
         if (i < Model.Count)

@@ -148,6 +148,18 @@ namespace capstone.Controllers
             {
                 return RedirectToAction("Index");
             }
+            if (!User.IsInRole("amministratore"))
+            {
+                if (!(bool)p.invendita)
+                {
+                    return RedirectToAction("Index");
+                }
+                if (p.prodottiinmagazzino == 0)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
             List<carello> c = model1.carello.Where((e) => e.idprodotti == id).ToList();
             List<vendita> v = new List<vendita>();
             foreach (var item in c)

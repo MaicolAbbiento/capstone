@@ -4,19 +4,18 @@
     ViewBag.Title = "login";
 }
 
-<h2>login</h2>
+<h2 class="text-center text-uppercase">login</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal d-flex flex-column align-items-center"  >
-        <h4>utenti</h4>
+    <div class="form-horizontal d-flex flex-column align-items-center d-flex flex-column align-items-center">
 
         <div class="form-group">
             @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label " })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "" } })
+                @Html.EditorFor(model => model.username, new { autocomplete = "off" })
                 @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
             </div>
         </div>

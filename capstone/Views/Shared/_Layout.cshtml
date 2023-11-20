@@ -12,20 +12,43 @@
 
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Nome dell'applicazione", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+            @Html.ActionLink("EpicCart", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Attiva/Disattiva spostamento" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li> <input type="text" id="input" /> <i class="fa-solid fa-magnifying-glass" style="color: #303134;" id="i"></i>  </li>
-                </ul>
+                @if (User.IsInRole("utente"))
+                {
+                    <ul class="navbar-nav flex-grow-1">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("logout", "logout", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("carrello", "carello", "gestionevendite", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("stato spedizioni", "statoSpedizioni", "gestionevendite", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("collabora con noi", "aziende", "aggiungicollaboratore1", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
+                }
+                else if (User.IsInRole("d-manager"))
+                {
+                    <ul class="navbar-nav flex-grow-1">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("logout", "logout", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("iserisci un nuovo prodotto", "prodotti", "prodotti", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
+                }
             </div>
         </div>
     </nav>
+    @if (User.IsInRole("utente"))
+    {
+        <nav class=" nav2 d-flex align-items-center justify-content-center list-unstyled">
+            <ul class="mb-0 ">
+                <li class="list-unstyled"> <input type="text" id="input" /> <i class="fa-solid fa-magnifying-glass" style="color: #303134;" id="i"></i>  </li>
+            </ul>
+        </nav>
+    }
+
     <div class="contentDiv" id="content">
         @RenderBody()
     </div>
@@ -57,35 +80,33 @@
                     data: { h: input },
                     success: function (data) {
 
-                    
-                      
-                        var content =`<div class="d-flex flex-wrap">`
+                        var content = `<div class="d-flex flex-wrap ms-2">`
                         for (var i = 0; data.length > i; i++) {
-                       
+
                             var div13 = " ";
                             if (data[i].nomeprodotto.length > 45) {
                                 var sorgente3 = arrurl[0] + "//" + arrurl[2] + "/Content/img/" + data[i].fotoprodotto
                                 var divg = data[i].nomeprodotto.slice(0, 45)
                                 div13 += `
-                                   <div class="me-3" style="width: 18rem;">
-           <img src=${sorgente3} class="imgCarello" />
-           <div class="card-body">
+                                                                                                   <div class="me-3" style="width: 18rem;">
+                                                                           <img src=${sorgente3} class="imgCarello" />
+                                                                           <div class="card-body">
 
-               <h5 class="card-title">
-               ${divg}...
-               </h5>   `} 
+                                                                               <h5 class="card-title">
+                                                                               ${divg}...
+                                                                               </h5>   `}
                             else {
                                 var sorgente3 = arrurl[0] + "//" + arrurl[2] + "/Content/img/" + data[i].fotoprodotto
                                 div13 += `
-                            <div class="me-3" style="width: 18rem;">
+                                                                                            <div class="me-3" style="width: 18rem;">
 <img src=${sorgente3} class="imgCarello" />
 <div class="card-body">
 
-        <h5 class="card-title">
-        ${data[i].nomeprodotto}
-        </h5>  `}
-                            var div2 = " " 
-                          
+                                                                        <h5 class="card-title">
+                                                                        ${data[i].nomeprodotto}
+                                                                        </h5>  `}
+                            var div2 = " "
+
                             if (data[i].valutazione != null && data[i].valutazione != 0) {
 
                                 for (var i2 = 0; i2 < data[i].valutazione; i2++) {
@@ -108,21 +129,20 @@
                             var sorgente2 = arrurl[0] + "//" + arrurl[2] + "/Home/dettagli/" + data.idprodotti
                             var div3 = " "
                             div3 += `
-               <p class="card-text"> ${data[i].prezzo}€</p>
+                                                                               <p class="card-text"> ${data[i].prezzo}€</p>
 
-                                <a href= ${sorgente2} class="btn btn-primary indexbtn">dettagli prodotto</a>
-           </div>
-       </div>`
-                            var p = div13  + div2 + div3 
-                
+                                                                                                <a href= ${sorgente2} class="btn btn-primary indexbtn">dettagli prodotto</a>
+                                                                           </div>
+                                                                       </div>`
+                            var p = div13 + div2 + div3
+
                             content += p
                         }
-                  
+
                         content += "</div>" + "</div>"
                         console.log(content)
                         $("#content").append(content)
                     }
-
 
                 })
             })

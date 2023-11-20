@@ -251,16 +251,28 @@ namespace capstone.Controllers
         [HttpGet]
         public ActionResult modifica(int id)
         {
-            ViewBag.categoria = Listacategoria
-                ;
-
             imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.utenti.username == User.Identity.Name);
             prodotti prodotti = model1.prodotti.FirstOrDefault((e) => e.idaziende == i.idaziende && e.idprodotti == id);
             if (i != null)
             {
-                return View(prodotti);
+                if (prodotti == null)
+                {
+                    List<SelectListItem> list = new List<SelectListItem>();
+                    List<Categoria> lista = new List<Categoria>();
+                    lista = model1.Categoria
+            .OrderBy(e => e.categoria == prodotti.categoria.categoria ? 0 : 1)
+            .ThenBy(e => e.categoria).ToList();
+
+                    foreach (Categoria p in lista)
+                    {
+                        SelectListItem item = new SelectListItem { Text = $"{p.categoria}", Value = $"{p.idcategoria}" };
+                        list.Add(item);
+                    }
+
+                    return View(prodotti);
+                }
             }
-            else { return RedirectToAction($"dettagli/{id}", "Home"); }
+            return RedirectToAction($"dettagli/{id}", "Home");
         }
 
         [HttpPost]
@@ -281,7 +293,7 @@ namespace capstone.Controllers
                 p.categoria = null;
                 string pathToSave = Path.Combine(Server.MapPath("~/Content/img"), p.fotoprodotto);
                 fotoprodotto.SaveAs(pathToSave);
-                Model1 db = new Model1();   
+                Model1 db = new Model1();
                 db.Entry(p).State = EntityState.Modified;
                 db.SaveChanges();
             }

@@ -87,6 +87,14 @@ input, textarea , .input{
         cursor: pointer;
         border-color: transparent;
     }
+    
+    input::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+        display: none;
+    }
+
+
+   
     textarea {
         line-height: 36px;
     }
@@ -112,7 +120,7 @@ input {
 
 #input {
     margin: 0;
-    width: 270px
+    width: 450px
 }
 
 ::-webkit-scrollbar {
@@ -125,6 +133,10 @@ input {
 
 ::-webkit-scrollbar-thumb {
     background: #545454;
+}
+.nav2 {
+    background: #0f0f0f;
+    height: 65px;
 }
 
 #i {
