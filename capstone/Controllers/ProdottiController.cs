@@ -255,7 +255,7 @@ namespace capstone.Controllers
             prodotti prodotti = model1.prodotti.FirstOrDefault((e) => e.idaziende == i.idaziende && e.idprodotti == id);
             if (i != null)
             {
-                if (prodotti == null)
+                if (prodotti != null)
                 {
                     List<SelectListItem> list = new List<SelectListItem>();
                     List<Categoria> lista = new List<Categoria>();
@@ -268,7 +268,7 @@ namespace capstone.Controllers
                         SelectListItem item = new SelectListItem { Text = $"{p.categoria}", Value = $"{p.idcategoria}" };
                         list.Add(item);
                     }
-
+                    ViewBag.categoria = Listacategoria;
                     return View(prodotti);
                 }
             }

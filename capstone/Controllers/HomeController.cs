@@ -282,34 +282,30 @@ namespace capstone.Controllers
         [HttpPost]
         public JsonResult comment(string textarea, int valutazione, int id, string titolod)
         {
+            if (!User.IsInRole("utente"))
+            {
+                valutazione = 0;
+            }
             recensioni recensioni = new recensioni();
             if (valutazione > 0)
             {
                 utenti U = model1.utenti.FirstOrDefault((e) => e.username == User.Identity.Name);
-                imprenditori i = model1.imprenditori.FirstOrDefault((e) => e.idUtenti == U.idUtenti);
-                aziende a = new aziende();
-                if (i != null)
-                {
-                    a = model1.aziende.FirstOrDefault((e) => e.idaziende == i.idaziende);
-                }
 
-               
-                    if (U != null)
+                if (U != null)
+                {
+                    recensioni r = model1.recensioni.FirstOrDefault((e) => e.idprodotti == id && e.idUtenti == U.idUtenti);
+                    if (r == null)
                     {
-                        recensioni r = model1.recensioni.FirstOrDefault((e) => e.idprodotti == id && e.idUtenti == U.idUtenti);
-                        if (r == null)
-                        {
-                            recensioni.idUtenti = U.idUtenti;
-                            recensioni.titolo = titolod;
-                            recensioni.idprodotti = id;
-                            recensioni.valutazione = valutazione;
-                            recensioni.descrizione = textarea;
-                            Model1 db = new Model1();
-                            db.recensioni.Add(recensioni);
-                            db.SaveChanges();
-                        }
+                        recensioni.idUtenti = U.idUtenti;
+                        recensioni.titolo = titolod;
+                        recensioni.idprodotti = id;
+                        recensioni.valutazione = valutazione;
+                        recensioni.descrizione = textarea;
+                        Model1 db = new Model1();
+                        db.recensioni.Add(recensioni);
+                        db.SaveChanges();
                     }
-                
+                }
             }
             else
             {

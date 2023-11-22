@@ -123,12 +123,12 @@
 
     if (asid == "buildpagedetail")
     {
-        link = "concludi/" + @Model.idprodotti;
+        link = "concludi/" + Model.idprodotti;
         link2 = "modifica/" + Model.idprodotti;
     }
     else
     {
-        link = "../concludi/" + @Model.idprodotti;
+        link = "../concludi/" + Model.idprodotti;
         link2 = "../modifica/" + Model.idprodotti;
     }
     <a class="btn" href=@link> conferma e metti in vendita il prodotto </a>
