@@ -74,7 +74,7 @@ namespace capstone.Controllers
             utenti utenti = model1.utenti.FirstOrDefault((e) => e.username == User.Identity.Name);
             List<vendita> vendita = new List<vendita>();
 
-            vendita = model1.vendita.Where((e) => e.idUtenti == utenti.idUtenti && e.stato != "consegnato").ToList();
+            vendita = model1.vendita.Where((e) => e.idUtenti == utenti.idUtenti && e.stato != "consegnato" && e.stato != "in carello").ToList();
 
             List<carello> c = new List<carello>();
             if (vendita.Count > 0)

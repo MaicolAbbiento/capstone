@@ -135,7 +135,7 @@
                 <i class="fa-regular fa-star comment" id="star4"></i>
                 <i class="fa-regular fa-star comment" id="star5"></i>
             </div>
-            <input placeholder="inserici un titolo" id="input" />
+            <input placeholder="inserici un titolo" id="inputtit" />
 <textarea class="d-block" id="textarea"> </textarea>
             <button id="btn2"> lascia recensione </button>
         </div>
@@ -236,7 +236,7 @@
 
             let input = $("#textarea").val()
             let div = document.getElementById("container")
-            let titolo = $("#input").val()
+            let titolo = $("#inputtit").val()
             var url = window.location.href;
             let n = div.getElementsByClassName("fa-solid").length;
             console.log(n)

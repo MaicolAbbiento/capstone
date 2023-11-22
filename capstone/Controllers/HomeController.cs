@@ -293,8 +293,7 @@ namespace capstone.Controllers
                     a = model1.aziende.FirstOrDefault((e) => e.idaziende == i.idaziende);
                 }
 
-                if (a == null)
-                {
+               
                     if (U != null)
                     {
                         recensioni r = model1.recensioni.FirstOrDefault((e) => e.idprodotti == id && e.idUtenti == U.idUtenti);
@@ -310,7 +309,7 @@ namespace capstone.Controllers
                             db.SaveChanges();
                         }
                     }
-                }
+                
             }
             else
             {

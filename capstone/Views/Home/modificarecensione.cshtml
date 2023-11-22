@@ -4,15 +4,14 @@
     ViewBag.Title = "modificarecensione";
 }
 
-<h2>modificarecensione</h2>
+<p> MODIFICA LA RECENSIONE </p>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal d-flex flex-column align-items-center">
-        <h4>recensioni</h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.idrecensioni)
 
@@ -46,7 +45,3 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

@@ -73,7 +73,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.categoria.categoria, htmlAttributes: new { @class = "control-label " })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.categoria.categoria, new SelectList(ViewBag.categoria, "Value", "Text"), new { @class = " w-100 rounded-pill p-2" })
+                @Html.DropDownListFor(model => model.categoria.categoria, new SelectList(ViewBag.categoria, "Value", "Text"), new { @class = "input" })
                 @Html.ValidationMessageFor(model => model.categoria.categoria, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -82,7 +82,7 @@
         </p>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="aggiungi azienda" class="btn btn-default" />
             </div>
         </div>
     </div>
