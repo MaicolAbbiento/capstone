@@ -11,8 +11,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal d-flex flex-column align-items-center">
-        <h4>aziende</h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.nomeazienda, htmlAttributes: new { @class = "control-label " })
