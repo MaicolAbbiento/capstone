@@ -13,4 +13,4 @@
 <img src="https://github.com/MaicolAbbiento/capstone/assets/128224384/e11ee2f9-05eb-4db2-991c-8f925d5a2a34" alt="Logo" width="60" height="50"> 
 
 <h2> FUNZIONALITA </h2>
-<P> questo sito permette di eseguire una compravendita di prodotti e se sei un venditore di inserire i tuoi prodotti in particolare ti permettee di creare una descrizione del tuo prodotto in modo dinamico </P>
+<P> questo sito permette di eseguire una compravendita di prodotti e se sei un venditore di inserire i tuoi prodotti in particolare ti permettee di creare una descrizione del tuo prodotto in modo dinamico. </P>
