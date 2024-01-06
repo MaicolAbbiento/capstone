@@ -37,13 +37,11 @@
     @{
         string link = "./aquista/" + prezzo;
     }
-    <!-- Button trigger modal -->
     <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal">
-acquista
+        acquista
     </button>
 
-    <!-- Modal -->
-    <div class="modal modal1 fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal modal1 fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -72,7 +70,6 @@ acquista
         $(document).ready(function () {
             var impElement = document.getElementById("div");
 
-            // Conta il numero di elementi LI all'interno dell'UL
             var numeroDiElementiLI = impElement.getElementsByTagName("input").length;
             console.log(numeroDiElementiLI)
             for (let i = 0; i < numeroDiElementiLI; i++) {
